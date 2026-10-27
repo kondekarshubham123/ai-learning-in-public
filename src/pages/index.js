@@ -6,10 +6,10 @@ import blogPostList from '@generated/docusaurus-plugin-content-blog/default/blog
 import styles from './index.module.css';
 
 const topics = [
-  { icon: '✳', title: 'LLMs', text: 'Prompting, inference, fine-tuning, and model experiments.', tag: 'llms', color: 'purple' },
-  { icon: '⌘', title: 'AI Agents', text: 'Agent workflows, orchestration, tools, and MCP.', tag: 'ai-agents', color: 'green' },
-  { icon: '▤', title: 'RAG', text: 'Embeddings, retrieval pipelines, and vector databases.', tag: 'rag', color: 'orange' },
-  { icon: '⌁', title: 'Open Source', text: 'Useful AI projects you can run, inspect, and build on.', tag: 'open-source', color: 'blue' },
+  { icon: '✳', title: 'LLMs', text: 'Prompting, inference, fine-tuning, and model experiments.', color: 'purple' },
+  { icon: '⌘', title: 'AI Agents', text: 'Agent workflows, orchestration, tools, and MCP.', color: 'green' },
+  { icon: '▤', title: 'RAG', text: 'Embeddings, retrieval pipelines, and vector databases.', color: 'orange' },
+  { icon: '⌁', title: 'Open Source', text: 'Useful AI projects you can run, inspect, and build on.', color: 'blue' },
 ];
 
 const publishedPosts = blogPostList.items.filter(post => !post.unlisted);
@@ -91,7 +91,7 @@ export default function Home() {
             </p>
             <div className={styles.actions}>
               <Link className={styles.primaryButton} to="/blog">Browse Daily Log <span>→</span></Link>
-              <Link className={styles.secondaryButton} to="/docs">Explore Roadmap</Link>
+              <Link className={styles.secondaryButton} to="/docs/intro">Explore Roadmap</Link>
             </div>
             <p className={styles.heroNote}><span /> Practical experiments. Honest notes. Open knowledge.</p>
           </div>
@@ -112,7 +112,7 @@ export default function Home() {
               <SectionTitle icon="✧" title="Explore topics" description="A few of the areas I'm learning by building." href="/blog/tags" linkText="All topics →" />
               <div className={styles.topicGrid}>
                 {topics.map(topic => (
-                  <Link key={topic.title} to={`/blog/tags/${topic.tag}`} className={`${styles.topicCard} ${styles[topic.color]}`}>
+                  <Link key={topic.title} to="/blog/tags" className={`${styles.topicCard} ${styles[topic.color]}`}>
                     <span className={styles.topicIcon}>{topic.icon}</span>
                     <h3>{topic.title}</h3>
                     <p>{topic.text}</p>
@@ -173,14 +173,12 @@ export default function Home() {
               <SectionTitle icon="◇" title="Popular tags" href="/blog/tags" />
               <p className={styles.sideDescription}>Browse by technology or concept.</p>
               <div className={styles.popularTags}>
-                {['llms', 'ai-agents', 'rag', 'open-source', 'ollama', 'python', 'mcp', 'llm-evaluation'].map((tag, i) =>
-                  <Link key={tag} className={styles[`tag${i % 4}`]} to={`/blog/tags/${tag}`}>{tag}</Link>
-                )}
+                <Link className={styles.tag0} to="/blog/tags">Browse published tags →</Link>
               </div>
             </section>
 
             <section className={styles.panel}>
-              <SectionTitle icon="⌘" title="Tools on my radar" href="/blog/tags/open-source" linkText="Explore →" />
+              <SectionTitle icon="⌘" title="Tools on my radar" href="/blog/tags" linkText="Explore →" />
               <p className={styles.sideDescription}>Projects worth trying hands-on.</p>
               <div className={styles.tools}>
                 <div><b>◉</b><small>Ollama</small></div>

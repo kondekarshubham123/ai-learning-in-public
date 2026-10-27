@@ -1,40 +1,45 @@
 
+ai-tools:
+  label: AI Tools
+  permalink: /ai-tools
+  description: Hands-on experiments with artificial intelligence tools.
+
 ai-agents:
   label: AI Agents
-  permalink: /tags/ai-agents
+  permalink: /ai-agents
   description: Experiments with autonomous and multi-agent systems.
 
 open-source:
   label: Open Source
-  permalink: /tags/open-source
+  permalink: /open-source
   description: Open-source AI projects and tools.
 
 llms:
   label: Large Language Models
-  permalink: /tags/llms
+  permalink: /llms
   description: LLM experiments, inference, and applications.
 
 rag:
   label: Retrieval-Augmented Generation
-  permalink: /tags/rag
+  permalink: /rag
   description: Experiments with retrieval-augmented generation.
 
 mcp:
   label: Model Context Protocol
-  permalink: /tags/mcp
+  permalink: /mcp
   description: MCP servers, clients, integrations, and tools.
 
 ollama:
   label: Ollama
-  permalink: /tags/ollama
+  permalink: /ollama
   description: Local LLMs and experiments with Ollama.
 
 python:
   label: Python
-  permalink: /tags/python
+  permalink: /python
   description: Python implementations and AI engineering.
 
 llm-evaluation:
   label: LLM Evaluation
-  permalink: /tags/llm-evaluation
+  permalink: /llm-evaluation
   description: Evaluating model quality, performance, and reliability.
