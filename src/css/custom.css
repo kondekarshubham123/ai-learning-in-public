@@ -1,0 +1,447 @@
+
+/* 365 Days of AI — Global design system */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  --ifm-font-family-base: 'DM Sans', system-ui, sans-serif;
+  --ifm-heading-font-family: 'Space Grotesk', sans-serif;
+
+  --ifm-color-primary: #3e59e8;
+  --ifm-color-primary-dark: #2946df;
+  --ifm-color-primary-darker: #223ed4;
+  --ifm-color-primary-darkest: #1c34ae;
+  --ifm-color-primary-light: #6075ed;
+  --ifm-color-primary-lighter: #8495f2;
+  --ifm-color-primary-lightest: #e8edff;
+
+  --ifm-background-color: #f8faff;
+  --ifm-background-surface-color: #ffffff;
+  --ifm-font-color-base: #15213d;
+  --ifm-heading-color: #14213d;
+
+  --ifm-link-color: #3458e8;
+  --ifm-link-hover-color: #223fc2;
+
+  --ifm-global-radius: 12px;
+  --ifm-card-border-radius: 16px;
+  --ifm-navbar-height: 64px;
+  --ifm-footer-background-color: #101b34;
+
+  --ifm-code-font-size: 90%;
+  --ifm-global-shadow-lw: 0 4px 18px rgb(21 33 61 / 5%);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #8da0ff;
+  --ifm-color-primary-dark: #6e85ff;
+  --ifm-color-primary-darker: #5e77ff;
+  --ifm-color-primary-darkest: #3e59e8;
+  --ifm-color-primary-light: #aab7ff;
+  --ifm-color-primary-lighter: #c3ccff;
+  --ifm-color-primary-lightest: #e0e5ff;
+
+  --ifm-background-color: #0c1425;
+  --ifm-background-surface-color: #121e34;
+  --ifm-font-color-base: #e0e8fa;
+  --ifm-heading-color: #f1f5ff;
+
+  --ifm-link-color: #a0b0ff;
+  --ifm-link-hover-color: #c2ccff;
+  --ifm-footer-background-color: #080e1b;
+}
+
+/* Typography */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: -0.025em;
+}
+
+.markdown p,
+.markdown li {
+  line-height: 1.8;
+}
+
+a {
+  transition: color 160ms ease;
+}
+
+/* Consistent navigation */
+
+.navbar {
+  background: #101b34;
+  box-shadow: 0 1px 0 rgb(255 255 255 / 10%);
+}
+
+.navbar,
+.navbar__title,
+.navbar__link,
+.navbar__brand {
+  color: #f4f7ff;
+}
+
+.navbar__link {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.navbar__link:hover,
+.navbar__link--active {
+  color: #aab8ff;
+}
+
+.navbar__toggle {
+  color: #fff;
+}
+
+/* Shared panels and cards */
+
+.card,
+.theme-doc-sidebar-container,
+.blog-list-page article,
+article.margin-bottom--xl {
+  border-color: var(--ifm-color-emphasis-200);
+}
+
+.card {
+  border-radius: 16px;
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+.card:hover {
+  box-shadow: 0 8px 24px rgb(21 33 61 / 9%);
+}
+
+/* Blog and documentation links */
+
+.pagination-nav__link {
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 14px;
+  background: var(--ifm-background-surface-color);
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+
+.pagination-nav__link:hover {
+  border-color: var(--ifm-color-primary);
+  transform: translateY(-2px);
+}
+
+.table-of-contents__link--active {
+  color: var(--ifm-color-primary);
+  font-weight: 700;
+}
+
+/* Code blocks */
+
+.theme-code-block {
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 12px;
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+code {
+  border-radius: 5px;
+}
+
+/* Footer */
+
+.footer {
+  background: #101b34;
+  color: #dce5ff;
+}
+
+.footer__title {
+  color: #fff;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.footer__link-item,
+.footer__copyright {
+  color: #c0cbe3;
+}
+
+.footer__link-item:hover {
+  color: #aab8ff;
+}
+
+/* Mobile navigation and spacing */
+
+@media (max-width: 996px) {
+  .navbar {
+    padding-inline: 12px;
+  }
+
+  .navbar__collapse {
+    background: #101b34;
+    padding: 12px;
+    border-radius: 0 0 12px 12px;
+  }
+
+  .navbar-sidebar {
+    background: #101b34;
+  }
+
+  .navbar-sidebar__brand,
+  .navbar-sidebar__items,
+  .navbar-sidebar__back {
+    background: #101b34;
+    color: #f4f7ff;
+  }
+
+  .navbar-sidebar__close {
+    color: #fff;
+  }
+}
+
+
+/* Daily Log */
+
+.blog-wrapper .blog-post-item {
+  padding: 24px;
+  margin-bottom: 20px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 16px;
+  background: var(--ifm-background-surface-color);
+  box-shadow: var(--ifm-global-shadow-lw);
+}
+
+.blog-wrapper .blog-post-item h2 a {
+  color: var(--ifm-heading-color);
+  text-decoration: none;
+}
+
+.blog-wrapper .blog-post-item h2 a:hover {
+  color: var(--ifm-color-primary);
+}
+
+.blog-wrapper .blog-post-item header {
+  margin-bottom: 12px;
+}
+
+.blog-wrapper .avatar__name,
+.blog-wrapper .blog-post-meta {
+  color: var(--ifm-color-emphasis-700);
+}
+
+.blog-wrapper .tag {
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+}
+
+.blog-wrapper .pagination-nav {
+  margin-top: 28px;
+}
+
+/* Blog post reading page */
+
+.blog-post-page article header h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.15;
+}
+
+.blog-post-page .markdown img {
+  border-radius: 12px;
+}
+
+/* Documentation and roadmap */
+
+.theme-doc-markdown {
+  max-width: 850px;
+}
+
+.theme-doc-markdown h1 {
+  margin-bottom: 24px;
+}
+
+.theme-doc-markdown h2 {
+  margin-top: 42px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.theme-doc-markdown img {
+  border-radius: 12px;
+}
+
+.theme-doc-sidebar-container {
+  background: var(--ifm-background-surface-color);
+}
+
+.menu__link {
+  border-radius: 8px;
+}
+
+.menu__link--active {
+  font-weight: 700;
+}
+
+/* Reading comfort */
+
+.markdown table {
+  display: block;
+  overflow-x: auto;
+}
+
+.markdown blockquote {
+  border-left-color: var(--ifm-color-primary);
+  border-radius: 0 10px 10px 0;
+  background: var(--ifm-color-emphasis-100);
+  padding: 14px 18px;
+}
+
+
+/* Homepage theme switching fixes */
+
+/* LIGHT MODE */
+:global([data-theme='light']) .home {
+  --ink: #15213d;
+  --muted: #586783;
+  --line: #e4eaf6;
+  --blue: #3e59e8;
+
+  color: var(--ink);
+  background: linear-gradient(
+    180deg,
+    #fbfcff 0%,
+    #f6f8ff 58%,
+    #ffffff 100%
+  );
+}
+
+/* DARK MODE */
+:global([data-theme='dark']) .home {
+  --ink: #edf2ff;
+  --muted: #a9b8d4;
+  --line: #293750;
+  --blue: #9aabff;
+
+  color: var(--ink);
+  background: linear-gradient(
+    180deg,
+    #0c1425 0%,
+    #111d32 58%,
+    #0c1425 100%
+  );
+}
+
+/* Hero text */
+:global([data-theme='dark']) .home .hero h1,
+:global([data-theme='dark']) .home .hero h2 {
+  color: #f1f5ff;
+}
+
+:global([data-theme='dark']) .home .lead,
+:global([data-theme='dark']) .home .heroNote {
+  color: #b6c3dd;
+}
+
+/* Panels and statistics */
+:global([data-theme='dark']) .home .panel,
+:global([data-theme='dark']) .home .stats {
+  background: #121e34;
+  border-color: #293750;
+}
+
+:global([data-theme='dark']) .home .stat {
+  border-color: #293750;
+}
+
+:global([data-theme='dark']) .home .stats blockquote {
+  color: #c4d0e8;
+}
+
+/* Topic cards */
+:global([data-theme='dark']) .home .topicCard {
+  background: #17243b;
+  border-color: #30405e;
+}
+
+:global([data-theme='dark']) .home .topicCard h3,
+:global([data-theme='dark']) .home .experimentInfo h3 a {
+  color: #edf2ff;
+}
+
+:global([data-theme='dark']) .home .topicCard p {
+  color: #b6c3dd;
+}
+
+/* Recent posts and tools */
+:global([data-theme='dark']) .home .experiment {
+  border-color: #293750;
+}
+
+:global([data-theme='dark']) .home .tools div {
+  background: #17243b;
+  border-color: #30405e;
+}
+
+:global([data-theme='dark']) .home .tools small {
+  color: #d4def2;
+}
+
+:global([data-theme='dark']) .home .suggestion,
+:global([data-theme='dark']) .home .bottomBanner {
+  background: linear-gradient(120deg, #182644, #121e34);
+  border-color: #30405e;
+}
+
+:global([data-theme='dark']) .home .suggestion,
+:global([data-theme='dark']) .home .bottomBanner h2 {
+  color: #edf2ff;
+}
+
+:global([data-theme='dark']) .home .suggestion small,
+:global([data-theme='dark']) .home .bottomBanner p {
+  color: #b6c3dd;
+}
+
+/* Hero artwork */
+:global([data-theme='dark']) .home .orbit {
+  background: radial-gradient(
+    ellipse at 55% 40%,
+    #25375e 0%,
+    #1b2948 55%,
+    #141f35 80%
+  );
+}
+
+:global([data-theme='dark']) .home .artCaption {
+  color: #b6c3dd;
+}
+
+/* Smooth transition without delaying the theme switch */
+.home,
+.home .panel,
+.home .stats,
+.home .topicCard,
+.home .suggestion,
+.home .bottomBanner {
+  transition: background-color 150ms ease, color 150ms ease,
+    border-color 150ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home,
+  .home .panel,
+  .home .stats,
+  .home .topicCard,
+  .home .suggestion,
+  .home .bottomBanner {
+    transition: none;
+  }
+}
+
+/* Theme switcher visibility in the navy navbar */
+.navbar button[aria-label*="Switch between dark and light mode"],
+.navbar button[title*="Switch between dark and light mode"] {
+  color: #f4f7ff;
+  border-radius: 10px;
+}
+
+.navbar button[aria-label*="Switch between dark and light mode"]:hover,
+.navbar button[title*="Switch between dark and light mode"]:hover {
+  background: rgb(255 255 255 / 12%);
+}
