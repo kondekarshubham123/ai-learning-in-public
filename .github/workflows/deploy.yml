@@ -14,10 +14,6 @@ concurrency:
   group: pages
   cancel-in-progress: true
 
-defaults:
-  run:
-    working-directory: 365-days-of-ai
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,7 +24,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: 365-days-of-ai/package-lock.json
+          cache-dependency-path: package-lock.json
 
       - name: Install dependencies
         run: npm ci
@@ -40,7 +36,7 @@ jobs:
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 365-days-of-ai/build
+          path: build
 
   deploy:
     if: github.event_name != 'pull_request'
