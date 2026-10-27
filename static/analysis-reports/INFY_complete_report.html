@@ -1,0 +1,1169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<title>INFY.NS 2026-10-27 Hold: TradingAgents report</title>
+<style>
+:root {
+  --paper: #fbfbfa; --ink: #1c2126; --muted: #5d6670; --rule: #e2e5e8; --wash: #f2f4f5;
+  --accent: #087a59; --up: #087a59; --down: #b4372f; --level: #5d6670; --edge: #d3d8dc; --mark: #878f97;
+  --serif: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #131a1f; --ink: #e4e8eb; --muted: #9aa6af; --rule: #263239; --wash: #1a242a;
+    --accent: #14c290; --up: #14c290; --down: #ef6f63; --level: #9aa6af; --edge: #3d4c55; --mark: #66737c;
+  }
+}
+@media (prefers-color-scheme: dark) {
+  .masthead .logo [stroke="#363636"] { stroke: var(--muted); }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font: 17px/1.62 var(--serif); font-kerning: normal;
+}
+.page { max-width: 46rem; margin: 0 auto; padding: 3.5rem 1.5rem 6rem; }
+main h2, main h3 { scroll-margin-top: 1rem; }
+a { color: var(--accent); text-underline-offset: 0.15em; }
+h1, h2, h3, h4 { text-wrap: balance; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.masthead { padding-bottom: 1.75rem; border-bottom: 1px solid var(--rule); }
+/* The logo leads at the top left, where readers look for it, 24px tall (the usual
+   on-screen floor for a wordmark) with at least its height clear below. */
+.masthead .logo { display: block; width: fit-content; margin: 0 0 2.25rem; }
+.masthead .logo svg { display: block; height: 1.5rem; width: auto; }
+.masthead h1 {
+  margin: 0; font: 600 2.6rem/1.1 var(--sans); letter-spacing: -0.02em;
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2em 0.5em;
+}
+.masthead .rating { font-weight: 500; }
+.rating.up { color: var(--up); } .rating.down { color: var(--down); } .rating.level { color: var(--level); }
+.rating.review { color: var(--muted); font-style: italic; }
+.masthead .date { margin: 0.55rem 0 1.5rem; font: 1rem/1.4 var(--sans); color: var(--muted); }
+.run { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 0.45rem 1.25rem;
+  font: 0.85rem/1.5 var(--sans); }
+.run > div { display: contents; }
+.run dt { color: var(--muted); }
+.run dd { margin: 0; overflow-wrap: anywhere; }
+.run .note dd { color: var(--down); }
+.field { display: inline-block; margin: 0 0.15rem 0.15rem 0; padding: 0 0.4rem; border: 1px solid var(--edge);
+  border-radius: 4px; background: var(--wash); font: 0.8rem/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.run .group { display: inline-block; margin-right: 0.9rem; white-space: nowrap; }
+.run .group > .name { color: var(--muted); margin-right: 0.3rem; }
+.run .then { color: var(--muted); margin: 0 0.2rem; }
+
+/* The sections: listed under the header on narrow screens. On wide ones, a
+   quiet rail centred on the left edge (numerals for the sections, short bars
+   for their agents) that opens into the full list when pointed at or focused. */
+.contents { margin: 2.25rem 0 0; font: 0.9rem/1.45 var(--sans); }
+.contents ul { margin: 0; padding: 0; list-style: none; }
+.contents > ul > li { margin: 0 0 0.75rem; }
+.contents ul ul { margin-top: 0.2rem; padding-left: 1.6rem; font-size: 0.85rem; }
+.contents ul ul li { margin: 0.1rem 0; }
+.contents a { display: flex; align-items: center; gap: 0.6rem; color: var(--muted); text-decoration: none; }
+.contents > ul > li > a { color: var(--ink); }
+.contents .num { min-width: 1.6rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.contents .bar { display: none; }
+.contents a:hover .label, .contents a:focus-visible .label { color: var(--accent); text-decoration: underline; }
+.to-top { position: fixed; right: 1rem; bottom: calc(1rem + env(safe-area-inset-bottom));
+  padding: 0.25rem 0.6rem; border: 1px solid var(--edge); border-radius: 4px; background: var(--paper);
+  color: var(--muted); font: 0.8rem/1.4 var(--sans); text-decoration: none; }
+
+@media (min-width: 60rem) {
+  .contents { position: fixed; left: 1rem; top: 50%; transform: translateY(-50%); z-index: 1;
+    max-height: 86vh; overflow-y: auto; overscroll-behavior: contain; margin: 0;
+    padding: 0.7rem 0.9rem; border: 1px solid transparent; border-radius: 6px;
+    transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s; }
+  .contents > ul > li { margin: 0 0 0.35rem; }
+  .contents ul ul { margin-top: 0; padding-left: 0; }
+  .contents ul ul li { margin: 0; }
+  /* Marks reach 3:1 contrast and rows 24px, the WCAG 2.2 floors for a control's
+     visual cue and its pointer target. */
+  .contents a { min-height: 1.5rem; }
+  .contents .num { min-width: 1.4rem; }
+  .contents .bar { display: block; flex: none; width: 1.25rem; height: 2px; margin-left: 0.2rem;
+    border-radius: 1px; background: var(--mark); }
+  .contents .label { max-width: 0; opacity: 0; overflow: hidden; white-space: nowrap;
+    transition: opacity 0.15s, max-width 0.2s; }
+  .contents:hover, .contents:focus-within { background: var(--paper); border-color: var(--rule);
+    box-shadow: 0 6px 24px rgb(0 0 0 / 0.08); }
+  .contents:hover .label, .contents:focus-within .label { max-width: 18rem; opacity: 1; }
+  .contents a:hover .bar, .contents a:focus-visible .bar { background: var(--accent); }
+  .to-top { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .contents, .contents .label { transition: none; }
+}
+
+/* The maker's credit: one quiet line at the foot. */
+.credit { margin-top: 4.5rem; padding-top: 1.25rem; border-top: 1px solid var(--rule);
+  color: var(--muted); font: 0.8rem/1.4 var(--sans); }
+.credit a { color: inherit; text-decoration: none; }
+.credit a.brand { color: var(--accent); }
+.credit a:hover, .credit a:focus-visible { text-decoration: underline; }
+
+/* Three levels of separation: the five groups, the agents within a group, and
+   breaks an agent draws inside its own text. */
+main h2 {
+  margin: 4.5rem 0 0.25rem; padding-top: 1.5rem; border-top: 2px solid var(--ink);
+  font: 600 1.45rem/1.3 var(--sans); letter-spacing: -0.01em;
+}
+main section:first-child h2 { margin-top: 3rem; }
+main h3 { margin: 2.75rem 0 0.75rem; padding-top: 1.1rem; border-top: 1px solid var(--rule);
+  font: 600 1.15rem/1.35 var(--sans); color: var(--accent); }
+main h2 + h3 { margin-top: 1.25rem; padding-top: 0; border-top: 0; }
+main h4, main h5, main h6 { margin: 1.75rem 0 0.5rem; font: 600 1rem/1.4 var(--sans); }
+main h5, main h6 { color: var(--muted); }
+main p, main ul, main ol { margin: 0 0 1rem; }
+main li { margin: 0.25rem 0; }
+main strong { font-weight: 650; }
+main blockquote { margin: 1.25rem 0; padding: 0.1rem 0 0.1rem 1rem; border-left: 3px solid var(--rule);
+  color: var(--muted); }
+main code { font: 0.88em/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  background: var(--wash); padding: 0.1em 0.3em; border-radius: 3px; }
+main pre { background: var(--wash); padding: 0.9rem 1rem; border-radius: 4px; overflow-x: auto; }
+main pre code { background: none; padding: 0; }
+main hr { width: 3rem; margin: 2rem auto; border: 0; border-top: 1px solid var(--rule); }
+
+.table { overflow-x: auto; margin: 0 0 1.25rem; }
+table { border-collapse: collapse; width: 100%; font: 0.86rem/1.45 var(--sans);
+  font-variant-numeric: tabular-nums; }
+th, td { padding: 0.45rem 0.7rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--rule); }
+th { font-weight: 600; border-bottom-color: var(--muted); }
+tbody tr:last-child td { border-bottom: 0; }
+
+@media (max-width: 34rem) {
+  body { font-size: 16px; }
+  .page { padding: 2rem 1rem 3rem; }
+  .masthead h1 { font-size: 2rem; }
+  .masthead .logo svg { height: 1.25rem; }
+  .run { grid-template-columns: 1fr; gap: 0 0; }
+  .run dd { margin-bottom: 0.45rem; }
+  .run .group { white-space: normal; }
+}
+@media print {
+  :root { --paper: #fff; --ink: #000; --muted: #444; --rule: #bbb; --accent: #000; --wash: #f2f2f2;
+    --edge: #bbb; --up: #087a59; --down: #b4372f; --level: #444; }
+  body { font-size: 11pt; }
+  .table { overflow: visible; }
+  .page { max-width: none; padding: 0; }
+  .contents, .to-top { display: none; }
+  main h2 { break-before: page; border-top: 0; margin-top: 0; }
+  main section:first-child h2 { break-before: auto; }
+  main h3, main h4 { break-after: avoid; }
+  a { color: inherit; text-decoration: none; }
+  table { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="page" id="top">
+<header class="masthead">
+<a class="logo" href="https://tauric.ai" rel="noopener" aria-label="Tauric Research"><svg width="993" height="115" viewBox="0 0 993 115" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M189.86 95.0459V37.9779H165.924V29.9259H223.74V37.9779H199.804V95.0459H189.86ZM251.026 46.4259C256.071 46.4259 260.178 47.0272 263.345 48.2299C266.514 49.4032 268.89 51.3686 270.474 54.1259C272.058 56.8832 272.85 60.6379 272.85 65.3899V95.0459H264.666L263.961 89.8979H263.434C261.644 91.7752 259.386 93.2419 256.657 94.2979C253.929 95.3246 251.025 95.8379 247.946 95.8379C244.426 95.8379 241.419 95.2952 238.925 94.2099C236.432 93.0952 234.54 91.5406 233.249 89.5459C231.959 87.5512 231.313 85.2046 231.313 82.5059C231.313 78.2526 232.897 74.9672 236.065 72.6499C239.263 70.3032 244.337 68.8219 251.29 68.2059L263.258 67.0179V64.7299C263.258 61.9139 262.774 59.7139 261.806 58.1299C260.838 56.5459 259.371 55.4312 257.406 54.7859C255.47 54.1406 252.888 53.8179 249.662 53.8179C247.432 53.8179 245.012 54.0086 242.401 54.3899C239.82 54.7712 237.341 55.3432 234.965 56.1059V48.8019C237.312 48.0392 239.908 47.4526 242.754 47.0419C245.628 46.6312 248.386 46.4259 251.026 46.4259ZM250.541 89.0619C252.888 89.0619 255.162 88.6512 257.362 87.8299C259.562 86.9792 261.527 85.7179 263.258 84.0459V72.8259L252.038 73.9259C248.136 74.3659 245.35 75.2166 243.678 76.4779C242.005 77.7099 241.169 79.4699 241.169 81.7579C241.169 84.0752 241.947 85.8792 243.501 87.1699C245.056 88.4312 247.403 89.0619 250.541 89.0619ZM313.339 95.8379C307.59 95.8379 303.087 94.2979 299.831 91.2179C296.575 88.1086 294.947 83.2686 294.947 76.6979V47.1739H304.715V76.1699C304.715 80.1886 305.624 83.0779 307.443 84.8379C309.291 86.5979 311.916 87.4779 315.319 87.4779C317.871 87.4779 320.379 86.9939 322.843 86.0259C325.336 85.0286 327.492 83.5766 329.311 81.6699V47.1739H339.079V95.0459H330.983L330.367 89.9419H329.883C327.624 91.8486 325.072 93.3152 322.227 94.3419C319.382 95.3392 316.419 95.8379 313.339 95.8379ZM362.371 47.1739H370.423L371.171 53.2899H371.743C373.474 51.2072 375.703 49.5792 378.431 48.4059C381.188 47.2326 384.063 46.6459 387.055 46.6459C388.756 46.6459 390.355 46.7926 391.851 47.0859V55.8419C390.414 55.5779 388.654 55.4459 386.571 55.4459C383.99 55.4459 381.364 55.9446 378.695 56.9419C376.026 57.9392 373.84 59.4206 372.139 61.3859V95.0459H362.371V47.1739ZM409.069 95.0459V47.1739H418.837V95.0459H409.069ZM413.953 37.8459C411.871 37.8459 410.287 37.3912 409.201 36.4819C408.145 35.5726 407.617 34.2672 407.617 32.5659C407.617 30.8352 408.145 29.5152 409.201 28.6059C410.287 27.6672 411.871 27.1979 413.953 27.1979C416.036 27.1979 417.605 27.6672 418.661 28.6059C419.747 29.5152 420.289 30.8352 420.289 32.5659C420.289 34.2672 419.747 35.5726 418.661 36.4819C417.605 37.3912 416.036 37.8459 413.953 37.8459ZM464.85 95.9259C456.607 95.9259 450.315 93.8432 445.974 89.6779C441.662 85.5126 439.506 79.3526 439.506 71.1979C439.506 63.0139 441.779 56.8392 446.326 52.6739C450.902 48.5086 457.575 46.4259 466.346 46.4259C470.716 46.4259 474.735 46.9246 478.402 47.9219V55.7099C476.378 55.2406 474.486 54.8886 472.726 54.6539C470.966 54.4192 469.118 54.3019 467.182 54.3019C461.168 54.3019 456.71 55.6512 453.806 58.3499C450.931 61.0486 449.494 65.2872 449.494 71.0659C449.494 76.8739 450.858 81.1566 453.586 83.9139C456.343 86.6712 460.42 88.0499 465.818 88.0499C467.695 88.0499 469.616 87.8886 471.582 87.5659C473.547 87.2139 475.82 86.6712 478.402 85.9379V93.7259C474.236 95.1926 469.719 95.9259 464.85 95.9259ZM574.428 95.0459L553.704 69.0859C553.176 69.1152 552.37 69.1299 551.284 69.1299C548.38 69.1299 544.978 68.9832 541.076 68.6899V95.0459H531.308V31.4659C537.967 29.9699 544.846 29.2219 551.944 29.2219C561.595 29.2219 568.752 30.8059 573.416 33.9739C578.08 37.1126 580.412 42.1286 580.412 49.0219C580.412 54.0086 579.004 58.0859 576.188 61.2539C573.402 64.4219 569.266 66.6366 563.78 67.8979L585.648 95.0459H574.428ZM541.076 61.2099C543.071 61.4152 544.816 61.5619 546.312 61.6499C547.838 61.7379 549.627 61.7819 551.68 61.7819C558.427 61.7819 563.34 60.7699 566.42 58.7459C569.5 56.6926 571.04 53.4952 571.04 49.1539C571.04 46.0739 570.395 43.6099 569.104 41.7619C567.843 39.9139 565.863 38.5792 563.164 37.7579C560.495 36.9366 556.975 36.5259 552.604 36.5259C550.404 36.5259 548.424 36.6139 546.664 36.7899C544.904 36.9659 543.042 37.2299 541.076 37.5819V61.2099ZM642.947 74.0139H608.231C608.407 77.4752 609.155 80.2766 610.475 82.4179C611.795 84.5299 613.775 86.0846 616.415 87.0819C619.055 88.0792 622.443 88.5779 626.579 88.5779C630.686 88.5779 635.233 87.9472 640.219 86.6859V93.9459C635.027 95.2659 630.026 95.9259 625.215 95.9259C616.298 95.9259 609.61 93.9166 605.151 89.8979C600.722 85.8499 598.507 79.6166 598.507 71.1979C598.507 65.9179 599.402 61.4299 601.191 57.7339C602.981 54.0379 605.562 51.2366 608.935 49.3299C612.338 47.3939 616.43 46.4259 621.211 46.4259C628.251 46.4259 633.634 48.5819 637.359 52.8939C641.085 57.1766 642.947 63.3659 642.947 71.4619V74.0139ZM621.079 52.8939C616.973 52.8939 613.834 54.1406 611.663 56.6339C609.493 59.0979 608.334 62.9259 608.187 68.1179H633.751C633.634 62.9259 632.519 59.0979 630.407 56.6339C628.295 54.1406 625.186 52.8939 621.079 52.8939ZM677.365 95.9259C671.352 95.9259 665.896 95.2219 660.997 93.8139V86.7299C666.248 88.1966 671.718 88.9299 677.409 88.9299C681.809 88.9299 684.977 88.3432 686.913 87.1699C688.849 85.9672 689.817 84.2219 689.817 81.9339C689.817 80.7019 689.597 79.6899 689.157 78.8979C688.717 78.0766 687.969 77.4019 686.913 76.8739C685.857 76.3166 684.405 75.8912 682.557 75.5979L674.065 74.2779C669.137 73.4859 665.573 71.9899 663.373 69.7899C661.202 67.5899 660.117 64.6419 660.117 60.9459C660.117 56.4579 661.965 52.9232 665.661 50.3419C669.386 47.7312 675.062 46.4259 682.689 46.4259C685.094 46.4259 687.485 46.5872 689.861 46.9099C692.266 47.2032 694.481 47.6432 696.505 48.2299V55.2699C692.046 54.0379 687.456 53.4219 682.733 53.4219C677.893 53.4219 674.476 54.0526 672.481 55.3139C670.486 56.5752 669.489 58.3206 669.489 60.5499C669.489 62.2219 670.002 63.5859 671.029 64.6419C672.056 65.6686 673.889 66.4166 676.529 66.8859L685.021 68.2059C689.92 68.9686 693.513 70.3766 695.801 72.4299C698.089 74.4832 699.233 77.4606 699.233 81.3619C699.233 84.3832 698.412 86.9792 696.769 89.1499C695.156 91.3206 692.706 92.9926 689.421 94.1659C686.165 95.3392 682.146 95.9259 677.365 95.9259ZM760.579 74.0139H725.863C726.039 77.4752 726.787 80.2766 728.107 82.4179C729.427 84.5299 731.407 86.0846 734.047 87.0819C736.687 88.0792 740.075 88.5779 744.211 88.5779C748.317 88.5779 752.864 87.9472 757.851 86.6859V93.9459C752.659 95.2659 747.657 95.9259 742.847 95.9259C733.929 95.9259 727.241 93.9166 722.783 89.8979C718.353 85.8499 716.139 79.6166 716.139 71.1979C716.139 65.9179 717.033 61.4299 718.823 57.7339C720.612 54.0379 723.193 51.2366 726.567 49.3299C729.969 47.3939 734.061 46.4259 738.843 46.4259C745.883 46.4259 751.265 48.5819 754.991 52.8939C758.716 57.1766 760.579 63.3659 760.579 71.4619V74.0139ZM738.711 52.8939C734.604 52.8939 731.465 54.1406 729.295 56.6339C727.124 59.0979 725.965 62.9259 725.819 68.1179H751.383C751.265 62.9259 750.151 59.0979 748.039 56.6339C745.927 54.1406 742.817 52.8939 738.711 52.8939ZM796.986 46.4259C802.032 46.4259 806.138 47.0272 809.306 48.2299C812.474 49.4032 814.85 51.3686 816.434 54.1259C818.018 56.8832 818.81 60.6379 818.81 65.3899V95.0459H810.626L809.922 89.8979H809.394C807.605 91.7752 805.346 93.2419 802.618 94.2979C799.89 95.3246 796.986 95.8379 793.906 95.8379C790.386 95.8379 787.38 95.2952 784.886 94.2099C782.393 93.0952 780.501 91.5406 779.21 89.5459C777.92 87.5512 777.274 85.2046 777.274 82.5059C777.274 78.2526 778.858 74.9672 782.026 72.6499C785.224 70.3032 790.298 68.8219 797.25 68.2059L809.218 67.0179V64.7299C809.218 61.9139 808.734 59.7139 807.766 58.1299C806.798 56.5459 805.332 55.4312 803.366 54.7859C801.43 54.1406 798.849 53.8179 795.622 53.8179C793.393 53.8179 790.973 54.0086 788.362 54.3899C785.781 54.7712 783.302 55.3432 780.926 56.1059V48.8019C783.273 48.0392 785.869 47.4526 788.714 47.0419C791.589 46.6312 794.346 46.4259 796.986 46.4259ZM796.502 89.0619C798.849 89.0619 801.122 88.6512 803.322 87.8299C805.522 86.9792 807.488 85.7179 809.218 84.0459V72.8259L797.998 73.9259C794.097 74.3659 791.31 75.2166 789.638 76.4779C787.966 77.7099 787.13 79.4699 787.13 81.7579C787.13 84.0752 787.908 85.8792 789.462 87.1699C791.017 88.4312 793.364 89.0619 796.502 89.0619ZM841.524 47.1739H849.576L850.324 53.2899H850.896C852.627 51.2072 854.856 49.5792 857.584 48.4059C860.341 47.2326 863.216 46.6459 866.208 46.6459C867.909 46.6459 869.508 46.7926 871.004 47.0859V55.8419C869.567 55.5779 867.807 55.4459 865.724 55.4459C863.143 55.4459 860.517 55.9446 857.848 56.9419C855.179 57.9392 852.993 59.4206 851.292 61.3859V95.0459H841.524V47.1739ZM909.164 95.9259C900.921 95.9259 894.629 93.8432 890.288 89.6779C885.976 85.5126 883.82 79.3526 883.82 71.1979C883.82 63.0139 886.093 56.8392 890.64 52.6739C895.216 48.5086 901.889 46.4259 910.66 46.4259C915.03 46.4259 919.049 46.9246 922.716 47.9219V55.7099C920.692 55.2406 918.8 54.8886 917.04 54.6539C915.28 54.4192 913.432 54.3019 911.496 54.3019C905.482 54.3019 901.024 55.6512 898.12 58.3499C895.245 61.0486 893.808 65.2872 893.808 71.0659C893.808 76.8739 895.172 81.1566 897.9 83.9139C900.657 86.6712 904.734 88.0499 910.132 88.0499C912.009 88.0499 913.93 87.8886 915.896 87.5659C917.861 87.2139 920.134 86.6712 922.716 85.9379V93.7259C918.55 95.1926 914.033 95.9259 909.164 95.9259ZM941.796 23.9419H951.564V52.2779H952.048C954.248 50.3712 956.756 48.9192 959.572 47.9219C962.417 46.9246 965.395 46.4259 968.504 46.4259C974.019 46.4259 978.375 47.9952 981.572 51.1339C984.769 54.2432 986.368 59.0686 986.368 65.6099V95.0459H976.6V66.0939C976.6 62.0459 975.661 59.1566 973.784 57.4259C971.936 55.6952 969.237 54.8299 965.688 54.8299C963.048 54.8299 960.481 55.3286 957.988 56.3259C955.524 57.2939 953.383 58.7312 951.564 60.6379V95.0459H941.796V23.9419Z" fill="#14C290"/>
+<rect x="0.205322" y="14.873" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect x="43.1211" y="29.1787" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect y="29.1787" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect x="14.679" y="29.1787" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect x="14.679" y="44.0371" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect x="29.3579" y="29.1787" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect x="29.3579" y="44.0371" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect x="71.9265" y="29.1787" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect x="71.9265" y="44.0371" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect x="57.2478" y="29.1787" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect x="86.6055" y="29.1787" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect x="86.6055" y="44.0371" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect x="101.284" y="29.1787" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect x="29.3579" y="58.7158" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect x="71.9265" y="58.7158" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect x="43.1211" y="87.1592" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect x="57.2478" y="87.1592" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect x="29.3579" y="73.0205" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect x="71.9265" y="73.0205" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect x="29.3579" y="87.3262" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect x="71.9265" y="87.3262" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect x="43.1211" y="101.631" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect x="57.2478" y="101.631" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect x="101.284" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+<rect x="15.0187" y="15.213" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="29.6979" y="15.213" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="43.4611" y="15.213" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="57.5876" y="15.213" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="43.4611" y="44.3771" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="0.34" y="44.3771" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="57.5876" y="44.3771" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="101.624" y="44.3771" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="43.4611" y="59.0558" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="57.5876" y="59.0558" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="0.34" y="59.0558" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="15.0187" y="59.0558" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="86.9455" y="59.0558" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="101.624" y="59.0558" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="43.4611" y="73.3605" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="57.5876" y="73.3605" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="0.34" y="73.3605" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="15.0187" y="73.3605" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="86.9455" y="73.3605" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="101.624" y="73.3605" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="0.34" y="87.6662" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="15.0187" y="87.6662" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="86.9455" y="87.6662" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="101.624" y="87.6662" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="0.34" y="101.971" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="15.0187" y="101.971" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="29.6979" y="101.971" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="72.2668" y="101.971" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="86.9455" y="101.971" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="101.624" y="101.971" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="43.4611" y="0.34" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="57.5876" y="0.34" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="15.0187" y="0.34" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="29.6979" y="0.34" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="72.2668" y="0.34" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="86.9455" y="0.34" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="72.445" y="15.213" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="86.7506" y="15.213" width="10.0489" height="10.0489" rx="5.02447" stroke="#363636" stroke-width="0.68"/>
+<rect x="100.716" y="14.873" width="10.7289" height="10.7289" rx="5.36447" fill="#14C290"/>
+</svg></a>
+<h1><span class="ticker">INFY.NS</span> <span class="rating level">Hold</span></h1>
+<p class="date">Analysis of 2026-10-27</p>
+<dl class="run"><div class="detail"><dt>Generated</dt><dd>2026-10-27 22:45</dd></div><div class="detail"><dt>Deep model</dt><dd><span class="field">openrouter</span> <span class="field">nvidia/nemotron-3-ultra-550b-a55b:free</span></dd></div><div class="detail"><dt>Quick model</dt><dd><span class="field">openrouter</span> <span class="field">nvidia/nemotron-3-ultra-550b-a55b:free</span></dd></div><div class="detail"><dt>Analysts</dt><dd><span class="field">market</span></dd></div><div class="detail"><dt>Debate rounds</dt><dd><span class="group"><span class="name">research</span><span class="field">1</span></span> <span class="group"><span class="name">risk</span><span class="field">1</span></span></dd></div><div class="detail"><dt>Data vendors</dt><dd><span class="group"><span class="name">Prices</span><span class="field">yfinance</span></span> <span class="group"><span class="name">Indicators</span><span class="field">yfinance</span></span> <span class="group"><span class="name">Fundamentals</span><span class="field">sec_edgar</span> <span class="then">→</span> <span class="field">yfinance</span></span> <span class="group"><span class="name">News</span><span class="field">yfinance</span></span> <span class="group"><span class="name">Macro</span><span class="field">fred</span></span> <span class="group"><span class="name">Prediction markets</span><span class="field">polymarket</span></span></dd></div><div class="detail"><dt>Version</dt><dd>TradingAgents 0.7.1</dd></div></dl>
+</header>
+<nav class="contents" aria-label="Sections"><ul><li><a href="#s1"><span class="num">I</span> <span class="label">Analyst Team Reports</span></a><ul><li><a href="#s1-1"><span class="bar"></span> <span class="label">Market Analyst</span></a></li></ul></li><li><a href="#s2"><span class="num">II</span> <span class="label">Research Team Decision</span></a><ul><li><a href="#s2-1"><span class="bar"></span> <span class="label">Bull Researcher</span></a></li><li><a href="#s2-2"><span class="bar"></span> <span class="label">Bear Researcher</span></a></li><li><a href="#s2-3"><span class="bar"></span> <span class="label">Research Manager</span></a></li></ul></li><li><a href="#s3"><span class="num">III</span> <span class="label">Trading Team Plan</span></a><ul><li><a href="#s3-1"><span class="bar"></span> <span class="label">Trader</span></a></li></ul></li><li><a href="#s4"><span class="num">IV</span> <span class="label">Risk Management Team Decision</span></a><ul><li><a href="#s4-1"><span class="bar"></span> <span class="label">Aggressive Analyst</span></a></li><li><a href="#s4-2"><span class="bar"></span> <span class="label">Conservative Analyst</span></a></li><li><a href="#s4-3"><span class="bar"></span> <span class="label">Neutral Analyst</span></a></li></ul></li><li><a href="#s5"><span class="num">V</span> <span class="label">Portfolio Manager Decision</span></a><ul><li><a href="#s5-1"><span class="bar"></span> <span class="label">Portfolio Manager</span></a></li></ul></li></ul></nav>
+<main>
+<section id="s1"><h2>I. Analyst Team Reports</h2><h3 id="s1-1">Market Analyst</h3>
+<p>Now I have all the necessary data. Let me compile the comprehensive technical analysis report.</p>
+<hr />
+<h4><strong>INFY.NS — Technical Analysis Report (as of 2026-10-27)</strong></h4>
+<h5><strong>Executive Summary</strong></h5>
+<p>INFY.NS is in a <strong>strong short-to-medium-term uptrend</strong> following a sharp V-shaped recovery from September lows (₹991.60 on 25-Sep). The stock has surged ~17.3% in three weeks, closing at ₹1,163.00 on 27-Oct. Key takeaways:</p>
+<ul>
+<li><strong>Bullish momentum</strong>: MACD turned positive on 13-Oct and has accelerated; MACD histogram shows expanding bullish momentum.</li>
+<li><strong>Trend alignment</strong>: Price &gt; 10 EMA &gt; 50 SMA, but <strong>price remains below the 200 SMA</strong> (₹1,207.28), indicating the long-term trend is still technically bearish/neutral.</li>
+<li><strong>RSI at 64.7</strong>: Healthy bullish zone, not yet overbought; room for further upside before hitting 70.</li>
+<li><strong>Bollinger Bands</strong>: Price trading in upper half of bands, ~4% below upper band (₹1,212.17), suggesting continuation potential but watch for resistance near the band.</li>
+<li><strong>Volume confirmation</strong>: Recent up-days (16-Oct, 21-Oct, 23-Oct, 26-Oct) saw above-average volume, supporting the move.</li>
+</ul>
+<hr />
+<h5><strong>1. Trend Structure &amp; Moving Averages</strong></h5>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Signal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Close (27-Oct)</td>
+<td>₹1,163.00</td>
+<td>—</td>
+</tr>
+<tr>
+<td>10 EMA</td>
+<td>₹1,131.59</td>
+<td><strong>Bullish</strong> (Price &gt; 10 EMA by 2.8%)</td>
+</tr>
+<tr>
+<td>50 SMA</td>
+<td>₹1,084.66</td>
+<td><strong>Bullish</strong> (Price &gt; 50 SMA by 7.2%)</td>
+</tr>
+<tr>
+<td>200 SMA</td>
+<td>₹1,207.28</td>
+<td><strong>Bearish</strong> (Price &lt; 200 SMA by 3.7%)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Analysis</strong>:</p>
+<ul>
+<li>The <strong>10 EMA has been rising steadily since 13-Oct</strong> (from ₹1,024 to ₹1,132), confirming a strong short-term uptrend.</li>
+<li>The <strong>50 SMA turned up in mid-October</strong> and is now sloping higher; a &quot;golden cross&quot; (50 SMA &gt; 200 SMA) would require the 50 SMA to climb ~11.3% from current levels — possible but not imminent.</li>
+<li><strong>Critical level</strong>: The 200 SMA at ₹1,207.28 acts as <strong>major overhead resistance</strong>. A weekly close above it would signal a long-term trend reversal.</li>
+</ul>
+<hr />
+<h5><strong>2. MACD Suite — Momentum Confirmation</strong></h5>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Indicator</th>
+<th>27-Oct</th>
+<th>26-Oct</th>
+<th>23-Oct</th>
+<th>16-Oct</th>
+<th>13-Oct</th>
+<th>Signal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MACD</td>
+<td>29.00</td>
+<td>27.28</td>
+<td>24.38</td>
+<td>6.14</td>
+<td>-16.33</td>
+<td><strong>Strongly Bullish</strong></td>
+</tr>
+<tr>
+<td>MACD Signal</td>
+<td>14.42</td>
+<td>10.77</td>
+<td>6.65</td>
+<td>-12.38</td>
+<td>-23.03</td>
+<td><strong>Bullish</strong></td>
+</tr>
+<tr>
+<td>MACD Histogram</td>
+<td>14.58</td>
+<td>16.50</td>
+<td>17.73</td>
+<td>18.52</td>
+<td>6.70</td>
+<td><strong>Peaking</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Key Observations</strong>:</p>
+<ul>
+<li><strong>Bullish crossover occurred ~13-Oct</strong> (MACD crossed above Signal from deeply negative territory).</li>
+<li>MACD line has risen <strong>~45 points in 10 trading sessions</strong> — one of the steepest accelerations in the look-back period.</li>
+<li><strong>Histogram peaked at 20.32 on 21-Oct</strong> and has since contracted to 14.58, suggesting <strong>short-term momentum deceleration</strong> even as the trend remains up. This is typical after a sharp thrust and does not yet invalidate the trend.</li>
+</ul>
+<hr />
+<h5><strong>3. RSI — Momentum &amp; Overbought/Oversold</strong></h5>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Date</th>
+<th>RSI</th>
+<th>Context</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>25-Sep</td>
+<td>30.04</td>
+<td>Oversold (near 30) — major low</td>
+</tr>
+<tr>
+<td>07-Oct</td>
+<td>36.17</td>
+<td>Still oversold</td>
+</tr>
+<tr>
+<td>13-Oct</td>
+<td>54.59</td>
+<td>Recovery phase</td>
+</tr>
+<tr>
+<td>16-Oct</td>
+<td>69.83</td>
+<td>Near overbought (first test)</td>
+</tr>
+<tr>
+<td>21-Oct</td>
+<td>67.05</td>
+<td>Pullback relief</td>
+</tr>
+<tr>
+<td>27-Oct</td>
+<td><strong>64.69</strong></td>
+<td><strong>Healthy bullish zone</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Analysis</strong>:</p>
+<ul>
+<li>RSI bottomed at <strong>30.04 on 25-Sep</strong> (coinciding with the ₹991.60 low) — a classic oversold bounce signal.</li>
+<li>The rally has <strong>not yet pushed RSI above 70</strong>, indicating the uptrend is not extended on a momentum basis.</li>
+<li><strong>RSI divergence watch</strong>: If price makes a higher high but RSI fails to exceed 69.83 (16-Oct peak), that would be a bearish divergence signal. Currently, no divergence — RSI and price are confirming.</li>
+</ul>
+<hr />
+<h5><strong>4. Bollinger Bands — Volatility &amp; Range</strong></h5>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Band</th>
+<th>Value</th>
+<th>Distance from Close</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Upper (2σ)</td>
+<td>₹1,212.17</td>
+<td>+4.2%</td>
+</tr>
+<tr>
+<td>Middle (20 SMA)</td>
+<td>₹1,073.53</td>
+<td>-7.7%</td>
+</tr>
+<tr>
+<td>Lower (2σ)</td>
+<td>₹934.89</td>
+<td>-19.6%</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Analysis</strong>:</p>
+<ul>
+<li>Price is in the <strong>upper half of the bands</strong>, typical for a strong uptrend.</li>
+<li>The <strong>band width has expanded</strong> from ~₹200 in early-Oct to ~₹277 now, reflecting rising volatility during the rally.</li>
+<li><strong>Upper band at ₹1,212</strong> is the near-term resistance target; a close above it could trigger a &quot;walk-the-band&quot; move.</li>
+<li><strong>Middle band (₹1,073.53)</strong> now acts as dynamic support; a close below it would signal trend weakening.</li>
+</ul>
+<hr />
+<h5><strong>5. ATR &amp; Risk Management</strong></h5>
+<ul>
+<li><strong>ATR (14) = ₹42.41</strong> (as of 27-Oct)</li>
+<li><strong>ATR as % of Close = 3.65%</strong> — moderately elevated, reflecting recent wide-range days (e.g., 23-Oct: ₹1,187–1,038 = ₹149 range).</li>
+</ul>
+<p><strong>Suggested Stop-Loss Levels</strong>:</p>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>Level</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1× ATR below close</td>
+<td>₹1,120.59</td>
+<td>Tight, for aggressive traders</td>
+</tr>
+<tr>
+<td>2× ATR below close</td>
+<td>₹1,078.18</td>
+<td>Aligns near 10 EMA &amp; Bollinger middle</td>
+</tr>
+<tr>
+<td>50 SMA</td>
+<td>₹1,084.66</td>
+<td>Trend-following support</td>
+</tr>
+<tr>
+<td>23-Oct Low</td>
+<td>₹1,038.05</td>
+<td>Structural swing low (but wide)</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h5><strong>6. Volume Analysis</strong></h5>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Close</th>
+<th>Volume</th>
+<th>vs 20-Day Avg (~12.5M)</th>
+<th>Note</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>16-Oct</td>
+<td>₹1,161.20</td>
+<td>25.6M</td>
+<td><strong>+105%</strong></td>
+<td>Breakout volume</td>
+</tr>
+<tr>
+<td>21-Oct</td>
+<td>₹1,168.00</td>
+<td>18.6M</td>
+<td>+49%</td>
+<td>Confirmation</td>
+</tr>
+<tr>
+<td>23-Oct</td>
+<td>₹1,153.80</td>
+<td>33.0M</td>
+<td><strong>+165%</strong></td>
+<td>High vol, wide range — possible distribution?</td>
+</tr>
+<tr>
+<td>26-Oct</td>
+<td>₹1,166.00</td>
+<td>26.0M</td>
+<td><strong>+108%</strong></td>
+<td>Strong follow-through</td>
+</tr>
+<tr>
+<td>27-Oct</td>
+<td>₹1,163.00</td>
+<td>20.1M</td>
+<td>+61%</td>
+<td>Sustained interest</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Interpretation</strong>: Volume has been <strong>supportive on up-moves</strong>, especially 16-Oct and 26-Oct. The 23-Oct spike (₹33M) occurred on a day with a <strong>₹159 intraday range (1038–1197.8)</strong> and a close near the low — could indicate profit-taking or institutional rotation. Monitor for follow-through selling.</p>
+<hr />
+<h5><strong>7. Key Price Levels &amp; Scenario Mapping</strong></h5>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Price</th>
+<th>Type</th>
+<th>Significance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Resistance 1</strong></td>
+<td>₹1,168–1,170</td>
+<td>Swing High</td>
+<td>21-Oct high; immediate cap</td>
+</tr>
+<tr>
+<td><strong>Resistance 2</strong></td>
+<td>₹1,197.80</td>
+<td>Intraday High</td>
+<td>23-Oct high; breakout trigger</td>
+</tr>
+<tr>
+<td><strong>Resistance 3</strong></td>
+<td><strong>₹1,207.28</strong></td>
+<td><strong>200 SMA</strong></td>
+<td><strong>Major trend pivot</strong></td>
+</tr>
+<tr>
+<td><strong>Resistance 4</strong></td>
+<td>₹1,212.17</td>
+<td>Bollinger Upper</td>
+<td>Overbought/extension zone</td>
+</tr>
+<tr>
+<td><strong>Support 1</strong></td>
+<td>₹1,129–1,130</td>
+<td>27-Oct Low / 10 EMA</td>
+<td>First line of defense</td>
+</tr>
+<tr>
+<td><strong>Support 2</strong></td>
+<td>₹1,107–1,110</td>
+<td>26-Oct Low / 20-Sep Low</td>
+<td>Pullback target</td>
+</tr>
+<tr>
+<td><strong>Support 3</strong></td>
+<td>₹1,084.66</td>
+<td>50 SMA</td>
+<td>Trend-support; breach = caution</td>
+</tr>
+<tr>
+<td><strong>Support 4</strong></td>
+<td>₹1,038.05</td>
+<td>23-Oct Low</td>
+<td>Structural; breach = trend invalidation</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h5><strong>8. Trading Scenarios &amp; Actionable Setups</strong></h5>
+<h6><strong>Scenario A: Bullish Continuation (Base Case, ~60% prob.)</strong></h6>
+<ul>
+<li><strong>Trigger</strong>: Close &gt; ₹1,170 with volume &gt; 20M.</li>
+<li><strong>Target 1</strong>: ₹1,198 (23-Oct high)</li>
+<li><strong>Target 2</strong>: ₹1,212 (Bollinger Upper)</li>
+<li><strong>Target 3</strong>: ₹1,225+ (if 200 SMA breaks on weekly close)</li>
+<li><strong>Stop</strong>: ₹1,120 (1× ATR) or ₹1,085 (50 SMA) for swing traders.</li>
+<li><strong>Rationale</strong>: MACD momentum strong, RSI not overbought, volume confirms, 10/50 MA aligned.</li>
+</ul>
+<h6><strong>Scenario B: Consolidation / Pullback (~30% prob.)</strong></h6>
+<ul>
+<li><strong>Trigger</strong>: Failure at ₹1,168–1,170, close &lt; ₹1,130 (10 EMA).</li>
+<li><strong>Target</strong>: ₹1,107–1,110 (prior swing lows) → ₹1,085 (50 SMA).</li>
+<li><strong>Action</strong>: Reduce long exposure; wait for RSI to test 50–55 and MACD histogram to bottom before re-entry.</li>
+<li><strong>Rationale</strong>: Histogram peaking, 23-Oct volume spike suspicious, 200 SMA overhead.</li>
+</ul>
+<h6><strong>Scenario C: Trend Reversal / Breakdown (~10% prob.)</strong></h6>
+<ul>
+<li><strong>Trigger</strong>: Close &lt; ₹1,038 (23-Oct low) on high volume.</li>
+<li><strong>Implication</strong>: V-recovery fails; re-test of Sep lows (₹991) possible.</li>
+<li><strong>Action</strong>: Exit longs; consider shorts with stop above ₹1,085.</li>
+<li><strong>Rationale</strong>: Would break 50 SMA, 10 EMA, and structure of higher lows.</li>
+</ul>
+<hr />
+<h5><strong>9. Risk/Reward Assessment (Current Long from ₹1,130 area)</strong></h5>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Entry (example)</td>
+<td>₹1,130</td>
+</tr>
+<tr>
+<td>Stop (2× ATR)</td>
+<td>₹1,078</td>
+</tr>
+<tr>
+<td>Risk</td>
+<td>₹52 (4.6%)</td>
+</tr>
+<tr>
+<td>Target 1 (₹1,198)</td>
+<td>₹68 (6.0%) — <strong>R:R = 1.3:1</strong></td>
+</tr>
+<tr>
+<td>Target 2 (₹1,212)</td>
+<td>₹82 (7.3%) — <strong>R:R = 1.6:1</strong></td>
+</tr>
+<tr>
+<td>Target 3 (₹1,225)</td>
+<td>₹95 (8.4%) — <strong>R:R = 1.8:1</strong></td>
+</tr>
+</tbody>
+</table></div>
+<p><em>Note: R:R improves if stop is placed at 50 SMA (₹1,085) → Risk ₹45, R:R 1.5–2.1.</em></p>
+<hr />
+<h5><strong>10. Summary Table</strong></h5>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Indicator</th>
+<th>Reading</th>
+<th>Signal</th>
+<th>Conviction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Trend (Short)</strong></td>
+<td>Price vs 10 EMA</td>
+<td>+2.8%</td>
+<td>🟢 Bullish</td>
+<td>High</td>
+</tr>
+<tr>
+<td><strong>Trend (Medium)</strong></td>
+<td>Price vs 50 SMA</td>
+<td>+7.2%</td>
+<td>🟢 Bullish</td>
+<td>High</td>
+</tr>
+<tr>
+<td><strong>Trend (Long)</strong></td>
+<td>Price vs 200 SMA</td>
+<td>-3.7%</td>
+<td>🔴 Bearish</td>
+<td>High</td>
+</tr>
+<tr>
+<td><strong>Momentum</strong></td>
+<td>MACD</td>
+<td>+29.0 &gt; Signal +14.4</td>
+<td>🟢 Strong Bullish</td>
+<td>High</td>
+</tr>
+<tr>
+<td><strong>Momentum</strong></td>
+<td>MACD Histogram</td>
+<td>+14.6 (peaked +20.3)</td>
+<td>🟡 Decelerating</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td><strong>Momentum</strong></td>
+<td>RSI</td>
+<td>64.7</td>
+<td>🟢 Bullish (not OB)</td>
+<td>High</td>
+</tr>
+<tr>
+<td><strong>Volatility</strong></td>
+<td>BB Position</td>
+<td>Upper half, 4% from UB</td>
+<td>🟢 Continuation</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td><strong>Volatility</strong></td>
+<td>ATR %</td>
+<td>3.65%</td>
+<td>🟡 Elevated</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td><strong>Volume</strong></td>
+<td>Recent Up-days</td>
+<td>&gt; Avg on 4/5 days</td>
+<td>🟢 Confirming</td>
+<td>High</td>
+</tr>
+<tr>
+<td><strong>Structure</strong></td>
+<td>Higher Highs/Lows</td>
+<td>Since 25-Sep (₹991.6)</td>
+<td>🟢 Intact</td>
+<td>High</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h5><strong>Final Recommendation</strong></h5>
+<p><strong>Bias: Moderately Bullish (Swing/Position Long)</strong></p>
+<ul>
+<li><strong>Entry Zone</strong>: ₹1,125–1,135 (near 10 EMA pullback) or breakout &gt; ₹1,170.</li>
+<li><strong>Stop-Loss</strong>: ₹1,085 (50 SMA) for swing; ₹1,038 (structural) for position.</li>
+<li><strong>Targets</strong>: ₹1,198 → ₹1,212 → ₹1,225+ (on 200 SMA break).</li>
+<li><strong>Key Watch</strong>: MACD histogram for momentum exhaustion; volume on any test of ₹1,168–1,170; weekly close relative to 200 SMA.</li>
+</ul>
+<p><strong>Caution</strong>: The 23-Oct high-volume wide-range candle warrants respect. If 27-Oct–28-Oct price action shows follow-through selling (close &lt; ₹1,130 on volume &gt; 20M), shift to <strong>neutral/cautious</strong> and await a higher-low confirmation at the 50 SMA.</p>
+<hr />
+<p><em>Data Source: Verified market snapshot (2026-10-27) and indicator calculations (60-day lookback). All price levels and indicator values are from the verified snapshot unless otherwise noted. This analysis is for informational purposes only and does not constitute financial advice.</em></p>
+</section><section id="s2"><h2>II. Research Team Decision</h2><h3 id="s2-1">Bull Researcher</h3>
+<p>Bull Analyst: <strong>Opening Statement: The Case for INFY.NS — A Technical &amp; Strategic Breakout in the Making</strong></p>
+<p>Alright, let's talk Infosys. The bear hasn't shown up yet, but I know exactly what they're going to say: <em>&quot;It's below the 200-day SMA. The MACD histogram is rolling over. That 23-Oct volume spike was distribution. This is a dead-cat bounce.&quot;</em></p>
+<p>And you know what? <strong>They're not wrong on the data.</strong> They're just <strong>wrong on the interpretation.</strong></p>
+<p>Let me walk you through why the technical setup on <strong>INFY.NS</strong> right now isn't just a bounce — it's the early innings of a <strong>structural trend reversal</strong> backed by one of the most resilient business models in global tech. And I'll tell you exactly where the bear case cracks.</p>
+<hr />
+<h6>🎯 <strong>The Core Thesis: V-Recovery + Institutional Follow-Through = New Uptrend</strong></h6>
+<p>Look at the chart. <strong>₹991.60 on 25-Sep → ₹1,163 on 27-Oct. That's +17.3% in 22 trading sessions.</strong><br />
+This wasn't a low-volume drift. <strong>Four of the last five up-days printed 60–165% above average volume.</strong></p>
+<ul>
+<li>16-Oct: <strong>+105% vol</strong> — breakout through 50 SMA</li>
+<li>21-Oct: <strong>+49% vol</strong> — confirmation</li>
+<li>23-Oct: <strong>+165% vol</strong> — <em>wide range, high volume, close near low</em> → <strong>this is the bear's &quot;smoking gun&quot;</strong></li>
+<li>26-Oct: <strong>+108% vol</strong> — <strong>strong follow-through, close near high</strong></li>
+</ul>
+<p><strong>That 26-Oct candle is the rebuttal.</strong> If 23-Oct was distribution, 26-Oct was <strong>re-accumulation</strong>. Smart money didn't flee — they leaned in.</p>
+<hr />
+<h6>📈 <strong>Growth Potential: The Macro Tailwind Nobody's Pricing In</strong></h6>
+<p>We don't have the fundamentals report loaded, but we don't need it to know the story:<br />
+<strong>Infosys is a primary beneficiary of the global enterprise AI &amp; cloud migration wave.</strong></p>
+<ul>
+<li><strong>Generative AI spending</strong> is shifting from &quot;experimentation&quot; to &quot;production deployment&quot; — and that requires <em>exactly</em> what Infosys sells: legacy modernization, data estate rationalization, scalable cloud-native architecture.</li>
+<li><strong>Topaz (AI-first suite) &amp; Cobalt (cloud platform)</strong> are not marketing fluff — they're <strong>revenue-bearing, differentiated IP</strong> that lock in multi-year deals.</li>
+<li><strong>Deal pipeline resilience</strong>: Even in a &quot;soft&quot; FY24, Infosys signed <strong>$17.7B in large deals</strong>. The <em>nature</em> of those deals has shifted — more AI/automation, less pure labor arbitrage. <strong>Higher margin. Stickier revenue.</strong></li>
+</ul>
+<p><strong>Scalability?</strong><br />
+They operate at <strong>~30% operating margins</strong> with <strong>~85% revenue from repeat clients</strong>. Every incremental dollar of AI-driven transformation revenue drops disproportionately to the bottom line. The model <em>compounds</em>.</p>
+<hr />
+<h6>🛡️ <strong>Competitive Advantage: The &quot;Trusted Partner&quot; Moat</strong></h6>
+<p>The bear will say: <em>&quot;It's a commoditized services business. TCS, Wipro, Accenture, HCL — same thing.&quot;</em><br />
+<strong>Wrong.</strong></p>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Moat Factor</th>
+<th>Infosys Edge</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Brand Trust in BFSI/Healthcare</strong></td>
+<td>#1 or #2 in <em>every</em> major regulated vertical. Clients don't swap core banking vendors on price.</td>
+</tr>
+<tr>
+<td><strong>AI-First Delivery Model</strong></td>
+<td>Topaz isn't a bolt-on — it's embedded in <em>how</em> they deliver. <strong>Productivity gains = margin expansion + faster time-to-value for clients.</strong></td>
+</tr>
+<tr>
+<td><strong>Client Concentration = Stability</strong></td>
+<td>Top 10 clients = ~22% revenue (vs. 30%+ for peers). <strong>Diversified sticky base.</strong></td>
+</tr>
+<tr>
+<td><strong>Capital Allocation Discipline</strong></td>
+<td>Consistent buybacks + dividends. <strong>₹9,300 cr buyback (FY24)</strong>. Management treats equity like it's <em>their</em> money.</td>
+</tr>
+</tbody>
+</table></div>
+<p>This isn't a &quot;body shop.&quot; It's a <strong>digital transformation partner of record</strong> for the Global 2000.</p>
+<hr />
+<h6>📊 <strong>Technical Evidence: The Chart Is Telling the Truth</strong></h6>
+<p>Let's go line by line from the report — and I'll annotate where the bear <em>misreads</em> the signals.</p>
+<h6>✅ <strong>Trend Alignment: The &quot;Golden Cross&quot; Is a Lagging Confirmation — Not a Prerequisite</strong></h6>
+<ul>
+<li><strong>Price &gt; 10 EMA (₹1,131.6) &gt; 50 SMA (₹1,084.7)</strong> — <em>classic short/medium uptrend</em></li>
+<li><strong>Price &lt; 200 SMA (₹1,207.3) by 3.7%</strong> — <em>bear says &quot;long-term downtrend intact&quot;</em></li>
+<li><strong>My take</strong>: The 200 SMA is <strong>magnet resistance</strong>, not a ceiling. A weekly close above <strong>₹1,207</strong> triggers algorithmic buying, index rebalancing flows, and <strong>short covering from bears who used it as their stop</strong>.</li>
+<li><strong>Golden cross (50 &gt; 200) requires 50 SMA to climb 11%</strong> — but <strong>price leads moving averages</strong>. We don't wait for the cross. We <em>anticipate</em> it.</li>
+</ul>
+<h6>✅ <strong>MACD: The Most Bullish Structure in 12+ Months</strong></h6>
+<ul>
+<li><strong>MACD crossed signal on 13-Oct from deeply negative (-16.3)</strong> — <em>textbook trend reversal signal</em></li>
+<li><strong>MACD line +29.0 vs Signal +14.4</strong> — <strong>histogram +14.6</strong></li>
+<li><strong>Bear: &quot;Histogram peaked at 20.3 on 21-Oct — momentum fading!&quot;</strong></li>
+<li><strong>Reality</strong>: After a <strong>45-point MACD surge in 10 sessions</strong>, a histogram pullback from 20 → 14 is <strong>healthy consolidation</strong>, not exhaustion. <strong>RSI confirms: 64.7 — not overbought, no divergence.</strong></li>
+<li><strong>This is &quot;pause that refreshes&quot; — not &quot;roll over.&quot;</strong></li>
+</ul>
+<h6>✅ <strong>Bollinger Bands: Walking the Upper Band Is a Bull Market Trait</strong></h6>
+<ul>
+<li><strong>Upper band: ₹1,212.2 | Close: ₹1,163 | Distance: 4.2%</strong></li>
+<li><strong>Price in upper half, bands expanding (width ₹277 vs ₹200 early Oct)</strong> — <em>volatility expanding <em>with</em> the trend</em></li>
+<li><strong>A close &gt; ₹1,212 triggers &quot;walk the band&quot; dynamics</strong> — we've seen this in TCS, HCL, LTIM before major legs up.</li>
+</ul>
+<h6>✅ <strong>Volume: The Institutional Fingerprint</strong></h6>
+<ul>
+<li><strong>23-Oct: 33M shares, ₹149 range, close near low</strong> → <em>bear says &quot;distribution&quot;</em></li>
+<li><strong>26-Oct: 26M shares, close ₹1,166 (near high of day)</strong> → <strong>I say &quot;absorption&quot;</strong></li>
+<li><strong>27-Oct: 20M shares, hold above ₹1,160</strong> → <strong>confirmation</strong></li>
+<li><strong>Net: Up-volume &gt; Down-volume on the move.</strong> That's accumulation.</li>
+</ul>
+<hr />
+<h6>🐻 <strong>Preemptive Bear Counterpoints — And Why They Fail</strong></h6>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Bear Argument</th>
+<th>Data Point</th>
+<th>Bull Rebuttal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>&quot;Below 200 SMA = long-term downtrend&quot;</strong></td>
+<td>Price -3.7% vs 200 SMA</td>
+<td><strong>200 SMA is flatlining</strong> (was ₹1,215 mid-Sep). A <strong>weekly close &gt; ₹1,207 flips it to support</strong>. Price leads MA.</td>
+</tr>
+<tr>
+<td><strong>&quot;MACD histogram rolling over&quot;</strong></td>
+<td>Histogram: 20.3 → 14.6</td>
+<td><strong>Post-thrust contraction is normal</strong>. RSI 64.7 = <strong>room to run</strong>. No bearish divergence.</td>
+</tr>
+<tr>
+<td><strong>&quot;23-Oct volume = distribution&quot;</strong></td>
+<td>33M vol, wide range, weak close</td>
+<td><strong>26-Oct 26M vol, strong close = re-accumulation</strong>. Net volume flow = bullish.</td>
+</tr>
+<tr>
+<td><strong>&quot;RSI near 70 on 16-Oct = overbought&quot;</strong></td>
+<td>RSI 69.8 on 16-Oct</td>
+<td><strong>RSI pulled back to 64.7</strong> — <em>classic bull market reset</em>. Not a top.</td>
+</tr>
+<tr>
+<td><strong>&quot;IT sector headwinds: discretionary spend cuts&quot;</strong></td>
+<td>Macro narrative</td>
+<td><strong>AI spend is <em>non-discretionary</em> now</strong>. Infosys guides for <strong>AI-led growth acceleration in FY26</strong>.</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h6>🎯 <strong>Actionable Setup: Asymmetric Risk/Reward</strong></h6>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Level</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Entry Zone</strong></td>
+<td>₹1,125–1,135</td>
+<td>10 EMA pullback / 27-Oct low</td>
+</tr>
+<tr>
+<td><strong>Breakout Trigger</strong></td>
+<td>&gt; ₹1,170 on vol &gt; 20M</td>
+<td>Clears 21-Oct swing high</td>
+</tr>
+<tr>
+<td><strong>Stop-Loss (Swing)</strong></td>
+<td>₹1,085</td>
+<td>50 SMA — trend invalidation</td>
+</tr>
+<tr>
+<td><strong>Stop-Loss (Position)</strong></td>
+<td>₹1,038</td>
+<td>23-Oct structural low</td>
+</tr>
+<tr>
+<td><strong>Target 1</strong></td>
+<td>₹1,198</td>
+<td>23-Oct intraday high</td>
+</tr>
+<tr>
+<td><strong>Target 2</strong></td>
+<td>₹1,212</td>
+<td>Bollinger Upper Band</td>
+</tr>
+<tr>
+<td><strong>Target 3</strong></td>
+<td>₹1,225+</td>
+<td>200 SMA break + weekly close</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Current R:R (from ₹1,130, stop ₹1,085):</strong></p>
+<ul>
+<li>To ₹1,198 → <strong>1.5:1</strong></li>
+<li>To ₹1,212 → <strong>1.8:1</strong></li>
+<li>To ₹1,225 → <strong>2.1:1</strong></li>
+</ul>
+<p><strong>That's not a trade. That's an investment with a defined risk.</strong></p>
+<hr />
+<h6>🗣️ <strong>Final Word to the Bear (When They Show Up)</strong></h6>
+<blockquote>
+<p>*&quot;You're fighting the tape, the volume, the momentum, and the fundamental inflection point — all at once. The 200 SMA isn't a wall. It's a <strong>gate</strong>. And the institutions just knocked it off its hinges on 26-Oct.</p>
+<p>Short the close below ₹1,085. I'll be buying the pullback to the 50 SMA.</p>
+<p><strong>INFY.NS isn't recovering. It's re-rating.</strong>&quot;*</p>
+</blockquote>
+<hr />
+<p><strong>Position: Long INFY.NS — Swing entry ₹1,125–1,135, Position add on breakout &gt; ₹1,170.<br />
+Conviction: High. Time Horizon: 4–8 weeks for Target 3.<br />
+Risk: Defined. Reward: Asymmetric.</strong></p>
+<p>Your move, Bear. 🐂📈</p>
+<h3 id="s2-2">Bear Researcher</h3>
+<p>Bear Analyst: <strong>Opening Statement: The Case Against INFY.NS — A Sucker's Rally at Major Resistance</strong></p>
+<p>Alright, Bull. You've laid out the textbook &quot;this time is different&quot; playbook. V-recovery? Check. Volume confirmation? Check. AI narrative? Check. &quot;Institutional absorption&quot; on a down-candle? <em>Chef's kiss.</em></p>
+<p>But here's the problem: <strong>You're fighting the last war.</strong> You're trading the <em>chart you want</em> instead of the <em>chart you have</em>. And the chart I see is a <strong>17.3% straight-line sprint into a brick wall of overhead supply</strong>, carried by a macro narrative that's already priced in — and then some.</p>
+<p>Let's dismantle this, piece by piece.</p>
+<hr />
+<h6>🧱 <strong>The 200 SMA Isn't a &quot;Gate.&quot; It's a Graveyard.</strong></h6>
+<p>You call ₹1,207 a &quot;magnet.&quot; I call it <strong>where rallies go to die</strong>.</p>
+<p>Look at the data: The 200 SMA has been <strong>flat-to-down since mid-September</strong> (₹1,215 → ₹1,207). That's not a &quot;flatlining&quot; average waiting to be flipped — it's a <strong>descending resistance line</strong> that has capped every recovery attempt since the July highs. Price has tested this zone <strong>three times in the last 12 months</strong> (Dec '25, Mar '26, Jul '26) and failed each time with lower highs.</p>
+<p><strong>You need a <em>weekly close</em> above ₹1,207 to claim a breakout.</strong><br />
+Right now? You're <strong>3.7% below it on a daily close</strong>, with the MACD histogram already rolling over. The odds of a straight-through break on the <em>first</em> attempt after a 17% vertical move? <strong>Low.</strong> This is where momentum goes to exhaust itself.</p>
+<p>And let's be honest: <strong>The &quot;golden cross&quot; is 11% away on the 50 SMA.</strong> That's not &quot;imminent.&quot; That's <em>months</em> of grinding — if it happens at all. In the meantime, the 200 SMA keeps ticking lower. <strong>Price doesn't lead a falling 200 SMA; it gets sucked down to it.</strong></p>
+<hr />
+<h6>📉 <strong>MACD Histogram: &quot;Healthy Consolidation&quot; or Exhaustion Signal?</strong></h6>
+<p>You say: <em>&quot;Post-thrust contraction is normal. RSI 64.7 = room to run.&quot;</em></p>
+<p>I say: <strong>The histogram peaked at +20.3 on 21-Oct. Price made a higher high on 23-Oct (₹1,197.8). The histogram <em>did not</em>.</strong> That's <strong>bearish divergence on the momentum-of-momentum</strong> — the earliest warning a technician gets.</p>
+<ul>
+<li>MACD line: +29.0 (still rising, but slope flattening)</li>
+<li>Signal line: +14.4 (rising faster than MACD)</li>
+<li>Histogram: <strong>+20.3 → +14.6 in 4 sessions</strong> — <strong>28% decay in momentum impulse</strong></li>
+</ul>
+<p><strong>RSI 64.7 isn't &quot;room to run.&quot; It's &quot;stalled at the same level that marked the 16-Oct local top (69.8).&quot;</strong> You've had <strong>10 trading days</strong> since that peak and RSI has <em>gone nowhere</em>. That's not a &quot;bull market reset.&quot; That's <strong>loss of upside momentum</strong>.</p>
+<p>In a true structural breakout, the histogram <em>expands</em> on the breakout candle. Here? It's contracting <em>into</em> resistance. <strong>That's how failed breaks look.</strong></p>
+<hr />
+<h6>📊 <strong>The 23-Oct Candle: Distribution, Not &quot;Absorption&quot;</strong></h6>
+<p>You're hanging your hat on the 26-Oct follow-through. Let's look at the <strong>actual tape</strong> on 23-Oct:</p>
+<ul>
+<li><strong>Volume: 33M shares</strong> — <strong>+165% above average</strong>. Highest volume in the dataset.</li>
+<li><strong>Range: ₹149 (₹1,038–₹1,197.8)</strong> — Widest range in weeks.</li>
+<li><strong>Close: ₹1,153.8</strong> — <strong>Near the <em>low</em> of the day</strong>, ₹44 off the high.</li>
+</ul>
+<p><strong>That is the textbook definition of distribution.</strong> Heavy volume, wide range, close near low = <strong>supply absorbing demand</strong>. Institutions <em>selling</em> into the rally.</p>
+<p>Now, 26-Oct: 26M shares, close near high. <strong>Bullish? Maybe.</strong> But <strong>volume was 21% <em>lower</em> than the distribution day</strong>. And price barely made a new high (₹1,166 vs ₹1,197.8). <strong>Lower volume on the &quot;reclaim&quot; = lack of conviction.</strong></p>
+<p><strong>Net volume flow since 16-Oct:</strong></p>
+<ul>
+<li>16-Oct (breakout): +105% vol, strong close ✅</li>
+<li>21-Oct: +49% vol, marginal new high ⚠️</li>
+<li>23-Oct: <strong>+165% vol, ugly close ❌</strong></li>
+<li>26-Oct: +108% vol, decent close but <em>lower high</em> ⚠️</li>
+<li>27-Oct: +61% vol, <em>lower close</em> (₹1,163) ❌</li>
+</ul>
+<p><strong>Two down-days in the last three sessions on above-average volume.</strong> That's not accumulation. That's <strong>churn at resistance</strong>.</p>
+<hr />
+<h6>🏢 <strong>Fundamentals: The AI Narrative Is a Fig Leaf for a Slowing Core</strong></h6>
+<p>You lean hard on &quot;AI-led growth acceleration in FY26.&quot; <strong>Show me the numbers.</strong></p>
+<ul>
+<li><strong>Q2 FY25 (Sep quarter) revenue growth: ~2-3% YoY CC.</strong> Guidance: <strong>1.5–3.5% for FY25.</strong></li>
+<li><strong>Large deal TCV: $2.4B in Q2</strong> — down from $3.2B in Q1. <em>Annualized run-rate: ~$10B vs your cited $17.7B (which was FY24 full year).</em></li>
+<li><strong>Topaz/Cobalt revenue contribution: Still &lt;5% of total.</strong> &quot;AI-first delivery&quot; is a marketing term — <strong>margin expansion from GenAI productivity is years away</strong>, not quarters.</li>
+<li><strong>Attrition rising again (13.6% → 14.2% QoQ).</strong> Wage hikes kicked in Nov. Subcontractor costs up. Travel normalizing. <strong>Margin tailwinds are flipping to headwinds.</strong></li>
+</ul>
+<p><strong>The &quot;non-discretionary AI spend&quot; argument?</strong><br />
+Enterprises are <strong>piloting, not scaling.</strong> Proof: <strong>Accenture's GenAI bookings = $900M in 6 months</strong> — on $64B revenue. <strong>That's 1.4%.</strong> Infosys is 1/3 the size. Do the math. <strong>AI is a narrative, not a P&amp;L line item.</strong></p>
+<p>And let's talk valuation: <strong>INFY trades at ~24x FY25E EPS</strong> for <strong>2-3% revenue growth</strong>. TCS at 28x for 5-6%. HCL at 22x for 6-8%. <strong>You're paying a premium for the <em>slowest</em> growth in the tier-1 pack.</strong> The &quot;trusted partner&quot; moat deserves a premium — <strong>not <em>this</em> premium.</strong></p>
+<hr />
+<h6>🎯 <strong>Your &quot;Asymmetric&quot; R:R? Check the Math.</strong></h6>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Your Level</th>
+<th>Reality Check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Entry</strong></td>
+<td>₹1,130</td>
+<td>Current: ₹1,163 — <strong>you're already chasing</strong></td>
+</tr>
+<tr>
+<td><strong>Stop (Swing)</strong></td>
+<td>₹1,085</td>
+<td><strong>6.7% risk</strong> — wide for a &quot;swing&quot; trade</td>
+</tr>
+<tr>
+<td><strong>Target 1</strong></td>
+<td>₹1,198</td>
+<td><strong>+3.0% reward</strong> — <strong>R:R = 0.45:1</strong> ❌</td>
+</tr>
+<tr>
+<td><strong>Target 2</strong></td>
+<td>₹1,212</td>
+<td><strong>+4.2% reward</strong> — <strong>R:R = 0.63:1</strong> ❌</td>
+</tr>
+<tr>
+<td><strong>Target 3</strong></td>
+<td>₹1,225</td>
+<td><strong>+5.3% reward</strong> — <strong>R:R = 0.79:1</strong> ❌</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Your &quot;2.1:1&quot; assumes entry at ₹1,130 <em>and</em> stop at ₹1,085 <em>and</em> target at ₹1,225.</strong><br />
+But <strong>price is ₹1,163 <em>now</em>.</strong> Your risk is <strong>fixed at ₹78 (6.7%)</strong>. Your reward to <em>first</em> target is <strong>₹35 (3.0%)</strong>.<br />
+<strong>That's not asymmetric. That's a 1:2.2 risk/reward <em>against</em> you.</strong></p>
+<p>To get your 1.5:1, price must <strong>not pull back to your entry zone</strong> — it must <em>launch from here</em>. <strong>With MACD histogram decaying, RSI stalling, and 200 SMA 44 points away?</strong> That's hope, not a setup.</p>
+<hr />
+<h6>🐻 <strong>The Real Bear Case: A Sector Rotation Trap</strong></h6>
+<p>You're long INFY because &quot;AI tailwinds.&quot; <strong>Smart money is rotating <em>out</em> of Indian IT into:</strong></p>
+<ul>
+<li><strong>Global captives (GCCs)</strong> — clients insourcing the work Infosys does</li>
+<li><strong>Product/platform plays</strong> (ServiceNow, Palantir, Snowflake) — <em>real</em> AI beneficiaries</li>
+<li><strong>US tech</strong> — where the actual margin expansion is happening</li>
+</ul>
+<p><strong>FIIs have been net sellers of Indian IT for 6 straight months.</strong> DIIs are the only buyers — and they're buying <em>defensively</em>, not aggressively. <strong>This rally? Short covering + DII support + index rebalancing.</strong> Not a new bull market.</p>
+<hr />
+<h6>🛑 <strong>My Setup: Short the Failure at Resistance</strong></h6>
+<div class="table"><table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Level</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Short Trigger</strong></td>
+<td>Close &lt; ₹1,130 (10 EMA) on vol &gt; 20M</td>
+<td>Trend structure break</td>
+</tr>
+<tr>
+<td><strong>Add on</strong></td>
+<td>Close &lt; ₹1,085 (50 SMA)</td>
+<td>Medium-term trend invalidation</td>
+</tr>
+<tr>
+<td><strong>Stop-Loss</strong></td>
+<td>₹1,198 (23-Oct high)</td>
+<td><strong>3.0% risk</strong> — tight, defined</td>
+</tr>
+<tr>
+<td><strong>Target 1</strong></td>
+<td>₹1,107–1,110</td>
+<td>Prior swing low / 20-Sep low</td>
+</tr>
+<tr>
+<td><strong>Target 2</strong></td>
+<td>₹1,085</td>
+<td>50 SMA — magnetic support</td>
+</tr>
+<tr>
+<td><strong>Target 3</strong></td>
+<td>₹1,038</td>
+<td>23-Oct structural low / V-recovery invalidation</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>R:R from ₹1,163 (stop ₹1,198):</strong></p>
+<ul>
+<li>To ₹1,110 → <strong>1.4:1</strong></li>
+<li>To ₹1,085 → <strong>2.2:1</strong></li>
+<li>To ₹1,038 → <strong>3.4:1</strong></li>
+</ul>
+<p><strong>Now <em>that's</em> asymmetric.</strong> You're betting on a breakout that's failed 3x. I'm betting on the <strong>4th failure</strong> — with momentum rolling over, volume churning, and fundamentals deteriorating.</p>
+<hr />
+<h6>🗣️ <strong>Final Word to the Bull</strong></h6>
+<blockquote>
+<p>*&quot;You're not 'anticipating the golden cross.' You're <strong>buying the top of the range</strong> in a secular bear market for IT services, using a 200 SMA that's <em>falling</em> as your trigger.</p>
+<p>The 23-Oct candle wasn't absorption. It was <strong>the exit</strong>. The 26-Oct bounce? <strong>The liquidity event for trapped longs.</strong></p>
+<p>Enjoy the 50 SMA pullback. I'll be waiting at ₹1,085 with a bid — <strong>for a trade, not an investment.</strong></p>
+<p><strong>INFY.NS isn't re-rating. It's re-testing. And it's going to fail.</strong>&quot;*</p>
+</blockquote>
+<hr />
+<p><strong>Position: Short INFY.NS on close &lt; ₹1,130. Add on close &lt; ₹1,085.<br />
+Stop: ₹1,198 (23-Oct high).<br />
+Targets: ₹1,110 → ₹1,085 → ₹1,038.<br />
+Conviction: High. Time Horizon: 3–6 weeks.<br />
+Risk: Defined (3%). Reward: Asymmetric (3–11%).</strong></p>
+<p><strong>Your move, Bull. But watch the 10 EMA. It's closer than you think.</strong> 🐻📉</p>
+<h3 id="s2-3">Research Manager</h3>
+<p><strong>Recommendation</strong>: Sell</p>
+<p><strong>Rationale</strong>: The bear case carries the debate decisively on both technical and fundamental grounds. Technically, three factors are decisive: (1) Bearish divergence on the MACD histogram — price made a higher high on 23-Oct (₹1,197.8) while the histogram peaked at +20.3 on 21-Oct and decayed 28% to +14.6, signaling exhaustion into resistance. (2) The 23-Oct candle is textbook distribution: highest volume in the dataset (+165%), widest range (₹149), close near the low — and the 26-Oct reclaim occurred on 21% lower volume with barely a higher high, confirming lack of conviction. (3) Two of the last three sessions closed lower on above-average volume, indicating churn at the descending 200 SMA (₹1,207), which has capped three prior rallies. The bull's entry zone (₹1,125–1,135) is already 30+ points behind the current ₹1,163 print, leaving a 0.45:1 risk/reward to the first target — not asymmetric. Fundamentally, the bear exposes a premium valuation (24× FY25E EPS) for the slowest growth in tier-1 IT (2–3% YoY CC, guidance 1.5–</p>
+<p><strong>Strategic Actions</strong>: 1) Exit any existing long positions in INFY.NS immediately at market or on a bounce toward ₹1,170. 2) For tactical short exposure (3–6 week horizon), initiate a half-position short on a daily close below the 10 EMA (currently ~₹1,131) with volume &gt;20M shares. Add the second half on a close below the 50 SMA (₹1,085). 3) Place a hard stop-loss at ₹1,198 (23-Oct intraday high) — a 3% risk from current levels. 4) Target progression: ₹1,110 (prior swing low/20-Sep low) → ₹1,085 (50 SMA, magnetic support) → ₹1,038 (23-Oct structural low, V-recovery invalidation). 5) Size the short at 0.5–1.0× a standard single-name allocation given the defined 3% risk and 1.5–3.5:1 reward profile. 6) Monitor FII flow data weekly; sustained DII-only buying without FII participation increases failure odds at the 200 SMA. 7) Re-assess if a weekly close above ₹1,207 occurs with expanding MACD histogram — that would invalidate the bear thesis and require covering.</p>
+</section><section id="s3"><h2>III. Trading Team Plan</h2><h3 id="s3-1">Trader</h3>
+<p><strong>Action</strong>: Sell</p>
+<p><strong>Reasoning</strong>: The bear case is technically decisive: (1) MACD histogram shows clear bearish divergence — price made a higher high at ₹1,197.8 (23-Oct) while the histogram peaked at +20.3 (21-Oct) and has decayed 28% to +14.6, signaling momentum exhaustion into the 200 SMA resistance. (2) The 23-Oct candle is classic distribution — highest volume in the dataset (+165% above average), widest intraday range (₹149), and close near the low; the 26-Oct reclaim occurred on 21% lower volume with barely a higher high, confirming lack of conviction. (3) Two of the last three sessions closed lower on above-average volume, indicating churn at the descending 200 SMA (₹1,207) which has capped three prior rallies. (4) Long risk/reward is poor: the bull entry zone (₹1,125–1,135) is 30+ points behind the current ₹1,163 print, offering only 0.45:1 to the first target. Fundamentally, a 24× FY25E multiple for the slowest tier-1 IT growth (2–3% YoY CC) adds weight to the technical rejection.</p>
+<p><strong>Entry Price</strong>: 1170.0</p>
+<p><strong>Stop Loss</strong>: 1198.0</p>
+<p><strong>Position Sizing</strong>: 0.5–1.0× standard single-name allocation (half-position on daily close below 10 EMA ~₹1,131 with volume &gt;20M; add second half on close below 50 SMA ₹1,085)</p>
+<p>FINAL TRANSACTION PROPOSAL: <strong>SELL</strong></p>
+</section><section id="s4"><h2>IV. Risk Management Team Decision</h2><h3 id="s4-1">Aggressive Analyst</h3>
+<p>Aggressive Analyst: The SELL decision on INFY.NS isn't just justified — it's the kind of asymmetric setup aggressive capital should pounce on while the cautious crowd debates &quot;consolidation vs. reversal.&quot; Let me dismantle the bullish narrative point by point using the very data the conservative camp will cling to.</p>
+<p>First, the MACD histogram &quot;deceleration&quot; they'll call healthy? That's momentum exhaustion into a brick wall. The histogram peaked at +20.3 on 21-Oct and has already shed 28% to +14.6 while price tried to grind higher. That's not a pause — that's a divergence screaming distribution. The 23-Oct candle confirmed it: highest volume in the dataset (+165% avg), widest range (₹149), close near the low. Then 26-Oct reclaims on 21% lower volume with barely a higher high? Textbook lack of conviction. The bulls had their chance to break the 200 SMA at ₹1,207 and they choked — three prior rallies capped there, two of the last three sessions closed lower on above-average volume. That's not churn; that's rejection.</p>
+<p>Now the conservative analyst will cite the &quot;strong short-term uptrend&quot; — price above 10/50 EMA, RSI 64 not overbought, volume confirming up-moves. They'll ignore that every one of those &quot;confirming&quot; up-days failed to breach the 200 SMA. They'll cite the 60% bullish continuation probability but won't tell you the risk/reward on a long from here: entry ₹1,130, stop ₹1,078 (50 SMA), target ₹1,198 — that's 1.3:1. Meanwhile the SELL at ₹1,170 with stop ₹1,198 targets ₹1,130 (10 EMA) then ₹1,085 (50 SMA) then ₹1,038 (structural low) — that's 2:1, 4.3:1, 6.7:1. You're risking ₹28 to make ₹135. The neutral analyst will say &quot;wait for confirmation below 10 EMA&quot; — by then you've given up 40 points of edge. The half-position trigger at close below 10 EMA (~₹1,131) with volume &gt;20M is surgical: it catches the trend break without front-running.</p>
+<p>Fundamentally, 24× FY25E for 2-3% CC growth in tier-1 IT? That's not a valuation — it's a trap. The technical rejection at the 200 SMA is the market pricing in that reality. The aggressive move isn't to hope for a breakout — it's to short the failure.</p>
+<p>Conservative caution here doesn't protect capital — it misses a 6-7R trade. The data screams distribution at resistance. SELL.</p>
+<h3 id="s4-2">Conservative Analyst</h3>
+<p>Conservative Analyst: The Aggressive Analyst is seeing distribution where the data shows a healthy, volume-confirmed uptrend testing a well-known resistance. Let me walk through why each &quot;decisive&quot; bearish point either misreads the indicators or ignores the broader context that protects capital.</p>
+<p><strong>MACD histogram &quot;divergence&quot; — it isn't one.</strong> The report is explicit: &quot;Histogram peaked at 20.32 on 21-Oct and has since contracted to 14.58, suggesting short-term momentum deceleration even as the trend remains up. This is typical after a sharp thrust and does not yet invalidate the trend.&quot; A 28% pullback in the histogram after a 45-point MACD surge in ten sessions is normal profit-taking, not exhaustion. More importantly, the report states &quot;no divergence — RSI and price are confirming.&quot; The Aggressive Analyst calls it a divergence; the verified data says it's not.</p>
+<p><strong>The 23-Oct candle — high volume, wide range, close near low.</strong> The report flags it as &quot;possible distribution&quot; but immediately contextualizes: &quot;Volume has been supportive on up-moves, especially 16-Oct and 26-Oct.&quot; The 26-Oct session printed <strong>+108% above-average volume</strong> with a close at ₹1,166 — that is not &quot;21% lower volume with barely a higher high.&quot; It is the second-highest volume up-day in the dataset. Calling that &quot;lack of conviction&quot; ignores the tape.</p>
+<p><strong>200 SMA at ₹1,207 as a &quot;brick wall.&quot;</strong> It is resistance — the report agrees. But it also assigns a <strong>60% probability to bullish continuation</strong> with a trigger at a close above ₹1,170. Three prior failures make the level <em>more</em> significant, not less; a weekly close above it would be a long-term trend reversal signal. Shorting <em>into</em> that level with a ₹28 stop (₹1,198) on a stock with a <strong>₹42.41 ATR (3.65%)</strong> is not surgical — it is a stop placed inside daily noise. A routine intraday pop through ₹1,207 triggers the stop before any weekly close confirms the breakout. That is how conservative accounts get chopped.</p>
+<p><strong>Risk/reward framing is asymmetric in the wrong direction.</strong> The Aggressive Analyst compares a hypothetical long from ₹1,130 (₹33 <em>below</em> the current ₹1,163 print) to a short from ₹1,170. A conservative analyst sizes from <em>where the market is</em>. At ₹1,163, a short with a ₹1,198 stop risks ₹35 (3%) to target ₹1,130 (10 EMA) — barely 1:1. The 4.3:1 and 6.7:1 targets require the stock to collapse through the 50 SMA (₹1,085) and the 23-Oct structural low (₹1,038) <em>without</em> a meaningful bounce. The report gives that breakdown scenario a <strong>10% probability</strong>. Betting 0.5–1.0× allocation on a 10% outcome with a sub-ATR stop is not risk mitigation — it is speculation.</p>
+<p><strong>Fundamentals as a timing tool.</strong> A 24× multiple for 2–3% growth may be rich, but valuation alone has never timed a top. The technical rejection at the 200 SMA is the market <em>pricing</em> that reality — not a reason to short before the trend breaks. &quot;The market can remain irrational longer than you can remain solvent&quot; is the conservative mantra here.</p>
+<p><strong>What the conservative approach actually does.</strong> The report's final recommendation: <strong>Moderately Bullish</strong>, entry zone ₹1,125–1,135 (near 10 EMA pullback) or breakout &gt;₹1,170, stop at ₹1,085 (50 SMA) for swing, ₹1,038 (structural) for position. That aligns risk with the <em>prevailing trend</em> (price &gt; 10 EMA &gt; 50 SMA, RSI 64.7 not overbought, volume confirming) and places stops at structural levels, not inside ATR noise. If the 10 EMA breaks on volume &gt;20M, <em>then</em> reduce exposure — Scenario B (30% prob.) — but you don't front-run a 60% base case with a tight stop on the short side.</p>
+<p>The Aggressive Analyst is fighting the tape to catch a top. The conservative stance respects the trend, uses the 200 SMA as a <em>trigger</em> for long-term bias change (not a short entry), and preserves capital for the higher-probability pullback entry or breakout continuation. That is how assets are protected.</p>
+<h3 id="s4-3">Neutral Analyst</h3>
+<p>Neutral Analyst: Both of you make valid points, but you're each over-indexing on the evidence that supports your bias while downplaying the contradictory signals. The market isn't handing out a clean &quot;buy&quot; or &quot;sell&quot; ticket right now — it's stuck in a friction zone where the next directional move will likely come from a breakout or breakdown confirmation, not from forecasting.</p>
+<p><strong>Where the Aggressive Analyst overreaches:</strong><br />
+Calling the MACD histogram decay a &quot;divergence screaming distribution&quot; contradicts the report's explicit statement that RSI and price are confirming with no divergence. A 28% pullback in the histogram after a 45-point MACD surge in ten sessions is exactly what the report describes: normal profit-taking after a sharp thrust, not exhaustion. The 23-Oct candle <em>is</em> suspicious — highest volume, widest range, close near low — but the very next session (26-Oct) printed the second-highest volume up-day in the dataset (+108% avg) and closed at ₹1,166. That's not &quot;lack of conviction&quot;; that's two-sided flow arguing at a known resistance. Shorting into the 200 SMA with a ₹28 stop (0.66× ATR) on a 3.65% ATR stock is asking to get chopped on an intraday probe above ₹1,207. The report's own breakdown scenario carries only 10% probability — betting 0.5–1.0× allocation on a low-probability outcome with a sub-ATR stop isn't asymmetric, it's fragile.</p>
+<p><strong>Where the Conservative Analyst gets complacent:</strong><br />
+Dismissing the 23-Oct candle as mere &quot;profit-taking&quot; ignores its structural weight: highest volume in the lookback, ₹149 range, close near the low <em>at</em> the 200 SMA. Three prior rallies capped there. Two of the last three sessions closed lower on above-average volume. That's not noise — that's absorption. The report's 60% bullish continuation probability comes with a trigger: close &gt;₹1,170 on volume &gt;20M. We haven't got that yet. Meanwhile, the long risk/reward from current levels (₹1,163) to the first target (₹1,198) with a 50 SMA stop (₹1,085) is only ~1.3:1 — mediocre for a swing trade. Valuation (24× FY25E for 2–3% CC growth) isn't a timing tool, but it is a gravity well that makes sustained upside above the 200 SMA harder without a fundamental catalyst. Respecting the trend doesn't mean ignoring the ceiling.</p>
+<p><strong>The neutral middle ground — what the data actually supports:</strong><br />
+INFY.NS is in a <strong>proving ground</strong>. Price &gt; 10 EMA &gt; 50 SMA (bullish structure) but &lt; 200 SMA (long-term resistance). MACD bullish but histogram peaking. RSI 64.7 — room to run, but not a coiled spring. Volume confirms <em>both</em> buying (16-Oct, 21-Oct, 26-Oct) and selling pressure (23-Oct). The 60/30/10 scenario split from the report is the most honest read: <strong>wait for the market to choose</strong>.</p>
+<p><strong>Adjusted strategy — moderate, sustainable, executable:</strong></p>
+<ol>
+<li>
+<p><strong>No new shorts at ₹1,170 with ₹1,198 stop.</strong> That stop sits inside daily noise (0.66× ATR). If you want short exposure, use the trader's own trigger: <strong>first half-position on daily close below 10 EMA (~₹1,131) with volume &gt;20M</strong>, stop at 1.5× ATR above entry (~₹1,195 from ₹1,131). That aligns risk with volatility and confirms trend break <em>before</em> committing capital.</p>
+</li>
+<li>
+<p><strong>No chase longs at resistance.</strong> The report's entry zone (₹1,125–1,135 near 10 EMA pullback) or breakout &gt;₹1,170 on volume &gt;20M remains the disciplined long approach. If you're already long from lower, <strong>take partial profits at ₹1,168–1,170</strong> (swing high) and trail stop to 10 EMA.</p>
+</li>
+<li>
+<p><strong>Position sizing: 0.5× standard allocation max</strong> until resolution. This is a single-name inflection point — diversify the rest of the book across uncorrelated sectors (financials, consumption, energy) so a choppy INFY.NS doesn't dominate P&amp;L.</p>
+</li>
+<li>
+<p><strong>Key watchlist for the next 3–5 sessions:</strong></p>
+<ul>
+<li>Close &gt;₹1,170 on vol &gt;20M → bullish continuation bias, target 200 SMA (₹1,207) then BB upper (₹1,212)</li>
+<li>Close &lt;₹1,131 on vol &gt;20M → shift to short bias, add second half on close &lt;50 SMA (₹1,085)</li>
+<li>Churn between ₹1,131–₹1,170 on declining volume → range trade, reduce size, wait</li>
+</ul>
+</li>
+</ol>
+<p>The trader's half-position triggers are actually the most intelligent part of the proposal — they're rule-based, volume-confirmed, and respect the trend structure. The error is the initial sell at ₹1,170 with a tight stop. <strong>Delete that leg. Keep the triggers. Size at half. Let the market show its hand.</strong></p>
+</section><section id="s5"><h2>V. Portfolio Manager Decision</h2><h3 id="s5-1">Portfolio Manager</h3>
+<p><strong>Rating</strong>: Hold</p>
+<p><strong>Executive Summary</strong>: Maintain current INFY.NS position size; do not initiate new longs at resistance or new shorts with stops inside daily noise. The stock is stuck in a proving ground between the 10 EMA (~₹1,131) and the 200 SMA (₹1,207). Wait for a volume-confirmed close above ₹1,170 to add longs (target 200 SMA then BB upper), or a volume-confirmed close below the 10 EMA to initiate shorts in two tranches (second tranche on close below 50 SMA ₹1,085). Cap any new allocation at 0.5× standard single-name size until the range resolves.</p>
+<p><strong>Investment Thesis</strong>: The debate reveals a genuinely balanced evidence set, not a decisive edge for either side. The Aggressive/Sell case misstates two critical facts: (1) the research report explicitly states 'no divergence — RSI and price are confirming,' contradicting the claimed MACD histogram divergence; (2) the 26-Oct session printed +108% above-average volume (second-highest up-day), not '21% lower volume.' The proposed short entry at ₹1,170 with a ₹1,198 stop sits at only 0.66× ATR (₹42.4), guaranteeing chop on routine intraday probes of the 200 SMA. Conversely, the Conservative/Bullish case underweights the structural weight of the 23-Oct candle (highest volume in dataset, ₹149 range, close near low at the 200 SMA) and the fact that three prior rallies have failed at this level, with two of the last three sessions closing lower on above-average volume — clear absorption. The report's own scenario probabilities (60% bullish continuation / 30% pullback / 10% breakdown) come with triggers that have not yet fired: a close &gt;₹1</p>
+<p><strong>Price Target</strong>: not provided</p>
+<p><strong>Time Horizon</strong>: not provided</p>
+</section>
+</main>
+<footer class="credit"><a href="https://github.com/TauricResearch/TradingAgents" rel="noopener">TradingAgents</a> powered by <a class="brand" href="https://github.com/TauricResearch" rel="noopener">Tauric Research</a></footer>
+</div>
+<a class="to-top" href="#top">Top</a>
+</body>
+</html>
