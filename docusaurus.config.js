@@ -8,9 +8,9 @@ const config = {
   favicon: 'img/favicon.ico',
 
   url: 'https://kondekarshubham123.github.io',
-  baseUrl: '/365-days-of-ai/',
+  baseUrl: '/ai-learning-in-public/',
   organizationName: 'kondekarshubham123',
-  projectName: '365-days-of-ai',
+  projectName: 'Ai Learning',
   trailingSlash: false,
   onBrokenLinks: 'throw',
 
