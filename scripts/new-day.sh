@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Usage: ./scripts/new-day.sh <>
 set -e
 TOPIC="${1:?Usage: ./scripts/new-day.sh \"Topic title\"}"
 
